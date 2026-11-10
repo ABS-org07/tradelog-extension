@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>TradeLog</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 460px;
+      min-height: 560px;
+      max-height: 680px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      background: #0A0C10;
+      color: #E8EAF0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid #1E2230;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -.3px;
+    }
+    .logo-icon {
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, #34C77B, #4F7EFF);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 800;
+      color: white;
+    }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .market-status {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 100px;
+      letter-spacing: .05em;
+    }
+    .market-open  { background: #0D2A1A; color: #34C77B; border: 1px solid #34C77B40; }
+    .market-closed { background: #1A1E2A; color: #9BA3B8; border: 1px solid #252A38; }
+    .export-btn {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 6px;
+      background: #13161E;
+      border: 1px solid #1E2230;
+      color: #9BA3B8;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .export-btn:hover { border-color: #34C77B; color: #34C77B; }
+
+    /* ── P&L STRIP ── */
+    .pnl-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: #1E2230;
+      border-bottom: 1px solid #1E2230;
+      flex-shrink: 0;
+    }
+    .pnl-cell {
+      background: #0D0F14;
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .pnl-cell .val {
+      font-size: 15px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -.3px;
+      display: block;
+    }
+    .pnl-cell .lbl {
+      font-size: 10px;
+      color: #5C6480;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-top: 2px;
+      display: block;
+    }
+    .green { color: #34C77B; }
+    .red   { color: #FF5A5A; }
+    .blue  { color: #4F7EFF; }
+    .white { color: #E8EAF0; }
+
+    /* ── CHART ── */
+    .chart-section {
+      padding: 10px 16px 6px;
+      border-bottom: 1px solid #1E2230;
+      flex-shrink: 0;
+    }
+    .chart-label {
+      font-size: 10px;
+      color: #5C6480;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 48px;
+    }
+    .chart-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+    .chart-bar {
+      width: 100%;
+      border-radius: 3px 3px 0 0;
+      min-height: 2px;
+      transition: height .3s;
+    }
+    .chart-bar.profit { background: #34C77B; }
+    .chart-bar.loss   { background: #FF5A5A; }
+    .chart-bar.zero   { background: #1E2230; height: 2px !important; }
+    .chart-day {
+      font-size: 9px;
+      color: #3D4255;
+      margin-top: 3px;
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 7px 12px;
+      border-bottom: 1px solid #1E2230;
+      flex-shrink: 0;
+    }
+    .tab {
+      padding: 4px 11px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      color: #5C6480;
+      border: 1px solid transparent;
+      transition: all .15s;
+    }
+    .tab:hover { color: #9BA3B8; background: #13161E; }
+    .tab.active { background: #13161E; border-color: #1E2230; color: #E8EAF0; }
+
+    /* ── TRADE LIST ── */
+    .trade-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 4px 0;
+    }
+    .trade-list::-webkit-scrollbar { width: 3px; }
+    .trade-list::-webkit-scrollbar-thumb { background: #1E2230; border-radius: 2px; }
+
+    .trade-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 16px;
+      border-bottom: 1px solid #0D0F14;
+      transition: background .1s;
+    }
+    .trade-item:hover { background: #0D0F14; }
+
+    .action-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 800;
+      flex-shrink: 0;
+      letter-spacing: .05em;
+      margin-top: 2px;
+    }
+    .action-buy  { background: #0D2A1A; color: #34C77B; border: 1px solid #34C77B30; }
+    .action-sell { background: #2A0D0D; color: #FF5A5A; border: 1px solid #FF5A5A30; }
+
+    .trade-info { flex: 1; min-width: 0; }
+    .trade-symbol {
+      font-weight: 700;
+      font-size: 13px;
+      color: #E8EAF0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .exchange-tag {
+      font-size: 9px;
+      font-weight: 500;
+      color: #5C6480;
+      background: #13161E;
+      border: 1px solid #1E2230;
+      border-radius: 4px;
+      padding: 1px 5px;
+    }
+    .trade-detail {
+      font-size: 11px;
+      color: #5C6480;
+      margin-top: 2px;
+    }
+    .trade-detail span { color: #9BA3B8; }
+
+    .trade-controls {
+      display: flex;
+      gap: 6px;
+      margin-top: 5px;
+      flex-wrap: wrap;
+    }
+    .emotion-select, .notes-input {
+      background: #13161E;
+      border: 1px solid #1E2230;
+      color: #5C6480;
+      border-radius: 4px;
+      font-size: 10px;
+      padding: 2px 5px;
+      cursor: pointer;
+    }
+    .emotion-select { min-width: 110px; }
+    .notes-input {
+      flex: 1;
+      min-width: 100px;
+      cursor: text;
+      color: #9BA3B8;
+    }
+    .notes-input::placeholder { color: #3D4255; }
+    .emotion-select:hover, .notes-input:hover { border-color: #252A38; }
+    .notes-input:focus { outline: none; border-color: #4F7EFF40; color: #E8EAF0; }
+
+    .trade-right { text-align: right; flex-shrink: 0; }
+    .trade-pnl {
+      font-size: 13px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+    .trade-time { font-size: 10px; color: #5C6480; margin-top: 2px; }
+
+    /* ── PRODUCT TAG ── */
+    .product-tag {
+      font-size: 9px;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .product-mis  { background: #1A1E2A; color: #9BA3B8; }
+    .product-cnc  { background: #001A30; color: #4F7EFF; }
+    .product-fno  { background: #1A0030; color: #A855F7; }
+    .product-nrml { background: #1A0030; color: #A855F7; }
+
+    /* ── SUMMARY TAB ── */
+    .summary-view {
+      padding: 12px 16px;
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .summary-view.active { display: flex; }
+    .summary-section { }
+    .summary-title {
+      font-size: 10px;
+      color: #5C6480;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-bottom: 8px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .summary-card {
+      background: #0D0F14;
+      border: 1px solid #1E2230;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .summary-card .s-val {
+      font-size: 16px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      display: block;
+    }
+    .summary-card .s-lbl {
+      font-size: 10px;
+      color: #5C6480;
+      margin-top: 2px;
+      display: block;
+    }
+    .divider {
+      height: 1px;
+      background: #1E2230;
+    }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .empty-state.show { display: flex; }
+    .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .4; }
+    .empty-title { font-weight: 600; color: #9BA3B8; margin-bottom: 6px; }
+    .empty-desc { font-size: 12px; color: #5C6480; line-height: 1.6; max-width: 220px; }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 7px 16px;
+      border-top: 1px solid #1E2230;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .footer-text { font-size: 11px; color: #5C6480; }
+    .source-dots { display: flex; gap: 5px; align-items: center; }
+    .source-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      opacity: .3;
+      transition: opacity .2s;
+    }
+    .source-dot.active { opacity: 1; }
+    .dot-zerodha  { background: #387ED1; }
+    .dot-groww    { background: #00D09C; }
+    .dot-upstox   { background: #6C5CE7; }
+    .dot-angelone { background: #FF6B35; }
+
+    .clear-btn {
+      font-size: 11px;
+      color: #FF5A5A;
+      background: none;
+      border: none;
+      cursor: pointer;
+      opacity: .6;
+    }
+    .clear-btn:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">
+      <div class="logo-icon">T</div>
+      TradeLog
+    </div>
+    <div class="header-right">
+      <button class="export-btn" id="export-btn">⬇ Export</button>
+      <div id="market-status" class="market-status market-closed">MARKET CLOSED</div>
+    </div>
+  </div>
+
+  <!-- P&L STRIP -->
+  <div class="pnl-strip">
+    <div class="pnl-cell">
+      <span class="val" id="today-pnl">+₹0</span>
+      <span class="lbl">Today P&L</span>
+    </div>
+    <div class="pnl-cell">
+      <span class="val white" id="today-trades">0</span>
+      <span class="lbl">Trades Today</span>
+    </div>
+    <div class="pnl-cell">
+      <span class="val blue" id="win-rate">0%</span>
+      <span class="lbl">Win Rate</span>
+    </div>
+    <div class="pnl-cell">
+      <span class="val white" id="total-pnl">+₹0</span>
+      <span class="lbl">All Time P&L</span>
+    </div>
+  </div>
+
+  <!-- 7-DAY CHART -->
+  <div class="chart-section">
+    <div class="chart-label">7-Day P&L</div>
+    <div class="chart-bars" id="chart-bars">
+      <!-- rendered by JS -->
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <div class="tab active" data-filter="today">Today</div>
+    <div class="tab" data-filter="all">All Trades</div>
+    <div class="tab" data-filter="winners">Winners</div>
+    <div class="tab" data-filter="losers">Losers</div>
+    <div class="tab" data-filter="summary">Summary</div>
+  </div>
+
+  <!-- TRADE LIST -->
+  <div class="trade-list" id="trade-list">
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon">📈</div>
+      <div class="empty-title">Watching the markets</div>
+      <div class="empty-desc">Place a trade on Zerodha, Groww or Upstox — it'll appear here automatically.</div>
+    </div>
+  </div>
+
+  <!-- SUMMARY VIEW -->
+  <div class="summary-view" id="summary-view">
+    <div class="summary-section">
+      <div class="summary-title">This Week</div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span class="s-val" id="week-pnl">+₹0</span>
+          <span class="s-lbl">Week P&L</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val white" id="week-trades">0</span>
+          <span class="s-lbl">Trades</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val blue" id="week-winrate">0%</span>
+          <span class="s-lbl">Win Rate</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val green" id="week-best">+₹0</span>
+          <span class="s-lbl">Best Trade</span>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="summary-section">
+      <div class="summary-title">This Month</div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span class="s-val" id="month-pnl">+₹0</span>
+          <span class="s-lbl">Month P&L</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val white" id="month-trades">0</span>
+          <span class="s-lbl">Trades</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val blue" id="month-winrate">0%</span>
+          <span class="s-lbl">Win Rate</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val red" id="month-worst">-₹0</span>
+          <span class="s-lbl">Worst Trade</span>
+        </div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="summary-section">
+      <div class="summary-title">All Time</div>
+      <div class="summary-grid">
+        <div class="summary-card">
+          <span class="s-val green" id="all-best-day">+₹0</span>
+          <span class="s-lbl">Best Day</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val red" id="all-worst-day">-₹0</span>
+          <span class="s-lbl">Worst Day</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val white" id="all-total-trades">0</span>
+          <span class="s-lbl">Total Trades</span>
+        </div>
+        <div class="summary-card">
+          <span class="s-val blue" id="all-winrate">0%</span>
+          <span class="s-lbl">Win Rate</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="source-dots">
+      <div class="source-dot dot-zerodha" id="dot-zerodha" title="Zerodha"></div>
+      <div class="source-dot dot-groww" id="dot-groww" title="Groww"></div>
+      <div class="source-dot dot-upstox" id="dot-upstox" title="Upstox"></div>
+      <div class="source-dot dot-angelone" id="dot-angelone" title="Angel One"></div>
+      <span class="footer-text" style="margin-left:4px" id="footer-text">Zero clicks needed</span>
+    </div>
+    <button class="clear-btn" id="clear-btn">Clear</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

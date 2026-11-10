@@ -1,0 +1,67 @@
+{
+  "manifest_version": 3,
+  "name": "TradeLog — Auto Trade Journal",
+  "version": "1.0.0",
+  "description": "Zero-click trade journal for Zerodha, Groww & Upstox. Every trade logged automatically. No manual entry ever.",
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "notifications"
+  ],
+
+  "host_permissions": [
+    "https://kite.zerodha.com/*",
+    "https://console.zerodha.com/*",
+    "https://groww.in/*",
+    "https://upstox.com/*",
+    "https://app.upstox.com/*",
+    "https://trade.angelone.in/*",
+    "https://www.angelone.in/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TradeLog",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://kite.zerodha.com/*"],
+      "js": ["content/zerodha.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://groww.in/*"],
+      "js": ["content/groww.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://app.upstox.com/*", "https://upstox.com/*"],
+      "js": ["content/upstox.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://trade.angelone.in/*"],
+      "js": ["content/angelone.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
