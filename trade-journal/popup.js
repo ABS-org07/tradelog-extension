@@ -65,13 +65,13 @@ function renderChart() {
   });
 
   const maxAbs = Math.max(...dayPnLs.map(v => Math.abs(v)), 1);
-  const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
   container.innerHTML = days.map((d, i) => {
     const pnl = dayPnLs[i];
     const heightPct = Math.round((Math.abs(pnl) / maxAbs) * 100);
     const cls = pnl > 0 ? 'profit' : pnl < 0 ? 'loss' : 'zero';
-    const dayLabel = dayNames[d.getDay()];
+    const dayLabel = `${monthNames[d.getMonth()]} ${d.getDate()}`;
     return `
       <div class="chart-bar-wrap" title="${pnl >= 0 ? '+' : ''}₹${pnl.toFixed(0)}">
         <div class="chart-bar ${cls}" style="height:${heightPct}%"></div>
