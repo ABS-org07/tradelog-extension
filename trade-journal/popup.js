@@ -71,7 +71,7 @@ function renderChart() {
     const pnl = dayPnLs[i];
     const heightPct = Math.round((Math.abs(pnl) / maxAbs) * 100);
     const cls = pnl > 0 ? 'profit' : pnl < 0 ? 'loss' : 'zero';
-    const dayLabel = `${monthNames[d.getMonth()]} ${d.getDate()}`;
+    const dayLabel = `${d.getDate()}/${d.getMonth()+1}`;
     return `
       <div class="chart-bar-wrap" title="${pnl >= 0 ? '+' : ''}₹${pnl.toFixed(0)}">
         <div class="chart-bar ${cls}" style="height:${heightPct}%"></div>
