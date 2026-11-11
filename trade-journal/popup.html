@@ -149,6 +149,32 @@
       white-space: nowrap;
     }
 
+    /* ── DEBRIEF ── */
+    .debrief-view { display: none; flex-direction: column; gap: 10px; padding: 12px 16px; overflow-y: auto; flex: 1; }
+    .debrief-view.active { display: flex; }
+    .debrief-header { font-size: 13px; font-weight: 700; color: #E8EAF0; margin-bottom: 2px; }
+    .debrief-sub { font-size: 11px; color: #9BA3B8; margin-bottom: 8px; }
+    .debrief-card { background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 12px; }
+    .debrief-card.loss { border-left: 3px solid #FF5A5A; }
+    .debrief-card.win { border-left: 3px solid #34C77B; }
+    .debrief-card.neutral { border-left: 3px solid #4F7EFF; }
+    .debrief-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #9BA3B8; margin-bottom: 4px; }
+    .debrief-value { font-size: 13px; color: #E8EAF0; }
+    .debrief-insight { font-size: 11px; color: #FF5A5A; margin-top: 4px; }
+    .debrief-insight.positive { color: #34C77B; }
+    .debrief-insight.neutral { color: #4F7EFF; }
+    .checklist { display: flex; flex-direction: column; gap: 8px; }
+    .check-item { display: flex; align-items: center; gap: 10px; background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 10px 12px; cursor: pointer; }
+    .check-item input[type=checkbox] { width: 16px; height: 16px; accent-color: #34C77B; cursor: pointer; flex-shrink: 0; }
+    .check-item label { font-size: 12px; color: #E8EAF0; cursor: pointer; flex: 1; }
+    .check-item.checked label { text-decoration: line-through; color: #5C6480; }
+    .checklist-title { font-size: 11px; font-weight: 700; color: #9BA3B8; letter-spacing: .5px; text-transform: uppercase; margin-top: 4px; }
+    .streak-bar { display: flex; align-items: center; gap: 8px; background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 10px 12px; }
+    .streak-num { font-size: 22px; font-weight: 800; color: #34C77B; }
+    .streak-info { display: flex; flex-direction: column; }
+    .streak-label { font-size: 11px; color: #9BA3B8; }
+    .streak-msg { font-size: 12px; color: #E8EAF0; font-weight: 600; }
+
     /* ── TABS ── */
     .tabs {
       display: flex;
@@ -419,6 +445,7 @@
     <div class="tab" data-filter="all">All Trades</div>
     <div class="tab" data-filter="winners">Winners</div>
     <div class="tab" data-filter="losers">Losers</div>
+    <div class="tab" data-filter="debrief">Debrief</div>
     <div class="tab" data-filter="summary">Summary</div>
   </div>
 
@@ -496,6 +523,53 @@
           <span class="s-val blue" id="all-winrate">0%</span>
           <span class="s-lbl">Win Rate</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEBRIEF VIEW -->
+  <div class="debrief-view" id="debrief-view">
+    <!-- streak -->
+    <div class="streak-bar">
+      <div class="streak-num" id="streak-num">0</div>
+      <div class="streak-info">
+        <span class="streak-label">Day streak 🔥</span>
+        <span class="streak-msg" id="streak-msg">Place a trade to start your streak</span>
+      </div>
+    </div>
+
+    <!-- why did I lose today -->
+    <div class="debrief-header">Why did I lose today?</div>
+    <div id="debrief-analysis">
+      <div class="debrief-card neutral">
+        <div class="debrief-label">Analysis</div>
+        <div class="debrief-value">No trades today yet.</div>
+        <div class="debrief-insight neutral">Place trades and come back here after market close.</div>
+      </div>
+    </div>
+
+    <!-- pre-market checklist -->
+    <div class="checklist-title">Pre-Market Checklist</div>
+    <div class="checklist" id="checklist">
+      <div class="check-item" id="ci1">
+        <input type="checkbox" id="c1">
+        <label for="c1">Checked Nifty trend & SGX Nifty</label>
+      </div>
+      <div class="check-item" id="ci2">
+        <input type="checkbox" id="c2">
+        <label for="c2">Set max loss limit for today</label>
+      </div>
+      <div class="check-item" id="ci3">
+        <input type="checkbox" id="c3">
+        <label for="c3">No revenge trading if I lose first trade</label>
+      </div>
+      <div class="check-item" id="ci4">
+        <input type="checkbox" id="c4">
+        <label for="c4">Only trade my setup — no FOMO entries</label>
+      </div>
+      <div class="check-item" id="ci5">
+        <input type="checkbox" id="c5">
+        <label for="c5">Max 3 trades today</label>
       </div>
     </div>
   </div>

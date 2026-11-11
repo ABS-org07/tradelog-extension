@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupClearBtn();
   setupExportBtn();
   updateMarketStatus();
+  setupChecklist();
 });
 
 function loadData() {
@@ -20,6 +21,7 @@ function loadData() {
     renderChart();
     renderTrades(currentFilter);
     if (currentFilter === 'summary') renderSummary();
+    if (currentFilter === 'debrief') renderDebrief();
   });
 }
 
@@ -348,8 +350,138 @@ function setupTabs() {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     tab.classList.add('active');
     currentFilter = tab.dataset.filter;
-    renderTrades(currentFilter);
+
+    const debriefView = document.getElementById('debrief-view');
+    const summaryView = document.getElementById('summary-view');
+    const tradeList = document.getElementById('trade-list');
+
+    if (currentFilter === 'debrief') {
+      debriefView.classList.add('active');
+      summaryView.style.display = 'none';
+      tradeList.style.display = 'none';
+      renderDebrief();
+    } else if (currentFilter === 'summary') {
+      debriefView.classList.remove('active');
+      summaryView.style.display = 'block';
+      tradeList.style.display = 'none';
+      renderSummary();
+    } else {
+      debriefView.classList.remove('active');
+      summaryView.style.display = 'none';
+      tradeList.style.display = 'block';
+      renderTrades(currentFilter);
+    }
   });
+}
+
+// ── DEBRIEF / WHY DID I LOSE ──
+
+function renderDebrief() {
+  const today = new Date().toDateString();
+  const todayTrades = allTrades.filter(t => new Date(t.timestamp).toDateString() === today);
+  const losingTrades = todayTrades.filter(t => t.pnl !== null && t.pnl < 0);
+  const winningTrades = todayTrades.filter(t => t.pnl !== null && t.pnl > 0);
+  const totalPnL = todayTrades.reduce((s, t) => s + (t.pnl || 0), 0);
+
+  // streak
+  updateStreak(todayTrades.length > 0);
+
+  const container = document.getElementById('debrief-analysis');
+
+  if (todayTrades.length === 0) {
+    container.innerHTML = `
+      <div class="debrief-card neutral">
+        <div class="debrief-label">Analysis</div>
+        <div class="debrief-value">No trades today yet.</div>
+        <div class="debrief-insight neutral">Place trades and come back here after market close.</div>
+      </div>`;
+    return;
+  }
+
+  let html = '';
+
+  // Overall result
+  const resultClass = totalPnL >= 0 ? 'win' : 'loss';
+  html += `<div class="debrief-card ${resultClass}">
+    <div class="debrief-label">Today's Result</div>
+    <div class="debrief-value">${totalPnL >= 0 ? '+' : ''}₹${totalPnL.toFixed(0)} across ${todayTrades.length} trades</div>
+    <div class="debrief-insight ${totalPnL >= 0 ? 'positive' : ''}">
+      ${totalPnL >= 0 ? '✅ Profitable day! ' + winningTrades.length + ' winners, ' + losingTrades.length + ' losers.' : '❌ Loss day. ' + losingTrades.length + ' losing trades out of ' + todayTrades.length + '.'}
+    </div>
+  </div>`;
+
+  // Pattern analysis
+  if (losingTrades.length > 0) {
+    const biggestLoss = losingTrades.reduce((min, t) => t.pnl < min.pnl ? t : min, losingTrades[0]);
+    html += `<div class="debrief-card loss">
+      <div class="debrief-label">Biggest Loss</div>
+      <div class="debrief-value">${biggestLoss.symbol} — ₹${Math.abs(biggestLoss.pnl).toFixed(0)} loss (${biggestLoss.type} ${biggestLoss.qty} qty @ ₹${biggestLoss.price})</div>
+      <div class="debrief-insight">Was this your setup or did you force the trade?</div>
+    </div>`;
+  }
+
+  // Overtrading check
+  if (todayTrades.length > 5) {
+    html += `<div class="debrief-card loss">
+      <div class="debrief-label">⚠️ Overtrading Alert</div>
+      <div class="debrief-value">${todayTrades.length} trades in one day</div>
+      <div class="debrief-insight">More than 5 trades/day often leads to revenge trading. Review each trade.</div>
+    </div>`;
+  }
+
+  // Win/loss ratio insight
+  if (todayTrades.length >= 2) {
+    const winRate = Math.round((winningTrades.length / todayTrades.length) * 100);
+    html += `<div class="debrief-card ${winRate >= 50 ? 'win' : 'neutral'}">
+      <div class="debrief-label">Win Rate Today</div>
+      <div class="debrief-value">${winRate}% (${winningTrades.length} of ${todayTrades.length} trades)</div>
+      <div class="debrief-insight ${winRate >= 50 ? 'positive' : 'neutral'}">${winRate >= 60 ? 'Strong execution today.' : winRate >= 40 ? 'Average day. Focus on setup quality.' : 'Review your entries — were you following your rules?'}</div>
+    </div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function updateStreak(tradedToday) {
+  try {
+    const data = JSON.parse(localStorage.getItem('tl_streak') || '{"count":0,"lastDate":""}');
+    const today = new Date().toDateString();
+    if (data.lastDate === today) {
+      // already counted
+    } else if (tradedToday) {
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      data.count = data.lastDate === yesterday.toDateString() ? data.count + 1 : 1;
+      data.lastDate = today;
+      localStorage.setItem('tl_streak', JSON.stringify(data));
+    }
+    document.getElementById('streak-num').textContent = data.count;
+    document.getElementById('streak-msg').textContent =
+      data.count === 0 ? 'Trade today to start your streak' :
+      data.count < 3 ? 'Keep going!' :
+      data.count < 7 ? 'Great consistency!' :
+      data.count < 30 ? '🔥 You\'re on fire!' : '🏆 Elite journaler!';
+  } catch(e) {}
+}
+
+function setupChecklist() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('tl_checklist') || '{}');
+    const today = new Date().toDateString();
+    const checks = saved.date === today ? saved.checks : {};
+    for (let i = 1; i <= 5; i++) {
+      const cb = document.getElementById('c' + i);
+      const item = document.getElementById('ci' + i);
+      if (!cb) continue;
+      cb.checked = !!checks['c' + i];
+      if (cb.checked) item.classList.add('checked');
+      cb.addEventListener('change', () => {
+        item.classList.toggle('checked', cb.checked);
+        checks['c' + i] = cb.checked;
+        try { localStorage.setItem('tl_checklist', JSON.stringify({ date: today, checks })); } catch(e) {}
+      });
+    }
+  } catch(e) {}
 }
 
 // ── CLEAR ──
