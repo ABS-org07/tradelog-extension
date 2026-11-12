@@ -64,7 +64,7 @@ function updateStatsStrip(stats) {
   const todayPnL = stats.todayPnL || 0;
   const pnlEl = document.getElementById('today-pnl');
   pnlEl.textContent = formatPnL(todayPnL);
-  pnlEl.className = 'val ' + (todayPnL > 0 ? 'green' : todayPnL < 0 ? 'red' : 'white');
+  pnlEl.className = 'pnl-main-val ' + (todayPnL > 0 ? 'profit' : todayPnL < 0 ? 'loss' : '');
 
   document.getElementById('today-trades').textContent = stats.todayTrades || 0;
   document.getElementById('win-rate').textContent = (stats.winRate || 0) + '%';

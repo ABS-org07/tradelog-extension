@@ -4,18 +4,36 @@
   <meta charset="UTF-8">
   <title>TradeLog</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
   <style>
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --bg:          #0B0D0F;
+      --bg2:         #111517;
+      --surface:     #15191A;
+      --surface-h:   #1C2221;
+      --emerald:     #0D8B67;
+      --emerald-b:   #35C995;
+      --text:        #E7EDE9;
+      --text2:       #929B9A;
+      --text3:       #606B68;
+      --border:      #252D2B;
+      --border-s:    #1E2524;
+      --profit:      #35C995;
+      --loss:        #E47777;
+      --blue:        #5B8DEF;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       width: 460px;
       min-height: 560px;
       max-height: 680px;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 13px;
-      background: #0A0C10;
-      color: #E8EAF0;
+      background: var(--bg);
+      color: var(--text);
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -23,116 +41,164 @@
 
     /* ── HEADER ── */
     .header {
-      padding: 12px 16px 10px;
-      border-bottom: 1px solid #1E2230;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
+      background: var(--bg);
     }
     .logo {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      letter-spacing: -.3px;
-      color: #E8EAF0;
+      gap: 9px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: -.2px;
+      color: var(--text);
     }
-    .logo-icon {
-      width: 26px; height: 26px;
-      background: #0D2A1A;
-      border: 1px solid #34C77B30;
+    .logo-mark {
+      width: 24px; height: 24px;
+      background: var(--emerald);
       border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
+    .logo-mark svg { display: block; }
+
     .header-right { display: flex; align-items: center; gap: 8px; }
+
     .market-status {
       font-size: 10px;
       font-weight: 600;
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 100px;
       letter-spacing: .05em;
+      font-family: 'Inter', sans-serif;
     }
-    .market-open  { background: #0D2A1A; color: #34C77B; border: 1px solid #34C77B40; }
-    .market-closed { background: #1A1E2A; color: #9BA3B8; border: 1px solid #252A38; }
+    .market-open   { background: #0D3B2C; color: var(--emerald-b); border: 1px solid #1A5C43; }
+    .market-closed { background: var(--surface); color: var(--text3); border: 1px solid var(--border); }
+
     .export-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-size: 11px;
-      font-weight: 600;
-      padding: 3px 10px;
-      border-radius: 6px;
-      background: #13161E;
-      border: 1px solid #1E2230;
-      color: #9BA3B8;
+      font-weight: 500;
+      padding: 4px 11px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text2);
       cursor: pointer;
       transition: all .15s;
+      font-family: 'Inter', sans-serif;
     }
-    .export-btn:hover { border-color: #34C77B; color: #34C77B; }
+    .export-btn svg { opacity: .6; transition: opacity .15s; }
+    .export-btn:hover { border-color: var(--emerald-b); color: var(--emerald-b); background: #0D3B2C; }
+    .export-btn:hover svg { opacity: 1; }
 
-    /* ── P&L STRIP ── */
-    .pnl-strip {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1px;
-      background: #1E2230;
-      border-bottom: 1px solid #1E2230;
+    /* ── P&L HERO ── */
+    .pnl-hero {
+      padding: 16px 16px 12px;
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      background: var(--bg2);
+    }
+    .pnl-main-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    .pnl-main-val {
+      font-family: 'Geist Mono', monospace;
+      font-size: 28px;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -.5px;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .pnl-main-val.profit { color: var(--profit); }
+    .pnl-main-val.loss   { color: var(--loss); }
+
+    .pnl-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
     }
     .pnl-cell {
-      background: #0D0F14;
-      padding: 10px 14px;
-      text-align: center;
+      background: var(--surface);
+      padding: 9px 12px;
+      text-align: left;
     }
     .pnl-cell .val {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
+      font-family: 'Geist Mono', monospace;
+      font-size: 14px;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
-      letter-spacing: -.3px;
       display: block;
+      color: var(--text);
     }
     .pnl-cell .lbl {
       font-size: 9px;
-      color: #5C6480;
+      font-weight: 500;
+      color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .07em;
       margin-top: 2px;
       display: block;
     }
-    .green { color: #34C77B; }
-    .red   { color: #FF5A5A; }
-    .blue  { color: #4F7EFF; }
-    .white { color: #E8EAF0; }
+    .profit { color: var(--profit); }
+    .loss   { color: var(--loss); }
+    .blue   { color: var(--blue); }
+    .white  { color: var(--text); }
+    .green  { color: var(--profit); }
+    .red    { color: var(--loss); }
 
     /* ── CHART ── */
     .chart-section {
-      padding: 10px 16px 6px;
-      border-bottom: 1px solid #1E2230;
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      background: var(--bg);
+    }
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
     }
     .chart-label {
       font-size: 10px;
-      color: #5C6480;
+      font-weight: 500;
+      color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .06em;
-      margin-bottom: 6px;
+      letter-spacing: .07em;
     }
     .chart-bars {
       display: flex;
       align-items: flex-end;
-      gap: 4px;
-      height: 60px;
-      overflow: visible;
+      gap: 5px;
+      height: 56px;
     }
     .chart-bar-wrap {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 4px;
       height: 100%;
       justify-content: flex-end;
     }
@@ -140,159 +206,155 @@
       width: 100%;
       border-radius: 3px 3px 0 0;
       min-height: 2px;
-      transition: height .3s;
+      transition: height .25s ease;
     }
-    .chart-bar.profit { background: #34C77B; }
-    .chart-bar.loss   { background: #FF5A5A; }
-    .chart-bar.zero   { background: #1E2230; height: 2px !important; }
+    .chart-bar.profit { background: var(--profit); opacity: .85; }
+    .chart-bar.loss   { background: var(--loss); opacity: .75; }
+    .chart-bar.zero   { background: var(--border); height: 2px !important; }
     .chart-day {
       font-size: 8px;
-      color: #9BA3B8;
-      margin-top: 3px;
+      font-weight: 500;
+      color: var(--text3);
       white-space: nowrap;
+      font-family: 'Inter', sans-serif;
     }
-
-    /* ── DEBRIEF ── */
-    .debrief-view { display: none; flex-direction: column; gap: 10px; padding: 12px 16px; overflow-y: auto; flex: 1; }
-    .debrief-view.active { display: flex; }
-    .debrief-header { font-size: 13px; font-weight: 700; color: #E8EAF0; margin-bottom: 2px; }
-    .debrief-sub { font-size: 11px; color: #9BA3B8; margin-bottom: 8px; }
-    .debrief-card { background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 12px; }
-    .debrief-card.loss { border-left: 3px solid #FF5A5A; }
-    .debrief-card.win { border-left: 3px solid #34C77B; }
-    .debrief-card.neutral { border-left: 3px solid #4F7EFF; }
-    .debrief-label { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #9BA3B8; margin-bottom: 4px; }
-    .debrief-value { font-size: 13px; color: #E8EAF0; }
-    .debrief-insight { font-size: 11px; color: #FF5A5A; margin-top: 4px; }
-    .debrief-insight.positive { color: #34C77B; }
-    .debrief-insight.neutral { color: #4F7EFF; }
-    .checklist { display: flex; flex-direction: column; gap: 8px; }
-    .check-item { display: flex; align-items: center; gap: 10px; background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 10px 12px; cursor: pointer; }
-    .check-item input[type=checkbox] { width: 16px; height: 16px; accent-color: #34C77B; cursor: pointer; flex-shrink: 0; }
-    .check-item label { font-size: 12px; color: #E8EAF0; cursor: pointer; flex: 1; }
-    .check-item.checked label { text-decoration: line-through; color: #5C6480; }
-    .checklist-title { font-size: 11px; font-weight: 700; color: #9BA3B8; letter-spacing: .5px; text-transform: uppercase; margin-top: 4px; }
-    .streak-bar { display: flex; align-items: center; gap: 8px; background: #13161E; border: 1px solid #1E2230; border-radius: 8px; padding: 10px 12px; }
-    .streak-num { font-size: 22px; font-weight: 800; color: #34C77B; }
-    .streak-info { display: flex; flex-direction: column; }
-    .streak-label { font-size: 11px; color: #9BA3B8; }
-    .streak-msg { font-size: 12px; color: #E8EAF0; font-weight: 600; }
 
     /* ── TABS ── */
     .tabs {
       display: flex;
-      gap: 2px;
-      padding: 7px 12px;
-      border-bottom: 1px solid #1E2230;
+      gap: 1px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      background: var(--bg);
     }
     .tab {
-      padding: 4px 11px;
-      border-radius: 6px;
+      padding: 5px 11px;
+      border-radius: 7px;
       font-size: 11px;
       font-weight: 500;
       cursor: pointer;
-      color: #5C6480;
+      color: var(--text3);
       border: 1px solid transparent;
       transition: all .15s;
+      font-family: 'Inter', sans-serif;
+      letter-spacing: -.1px;
     }
-    .tab:hover { color: #9BA3B8; background: #13161E; }
-    .tab.active { background: #13161E; border-color: #1E2230; color: #E8EAF0; }
+    .tab:hover { color: var(--text2); background: var(--surface); }
+    .tab.active {
+      background: var(--surface);
+      border-color: var(--border);
+      color: var(--text);
+    }
 
     /* ── TRADE LIST ── */
     .trade-list {
       flex: 1;
       overflow-y: auto;
-      padding: 4px 0;
+      padding: 2px 0;
+      background: var(--bg);
     }
     .trade-list::-webkit-scrollbar { width: 3px; }
-    .trade-list::-webkit-scrollbar-thumb { background: #1E2230; border-radius: 2px; }
+    .trade-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     .trade-item {
       display: flex;
       align-items: flex-start;
-      gap: 10px;
-      padding: 10px 16px;
-      border-bottom: 1px solid #0D0F14;
-      transition: background .1s;
+      gap: 11px;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border-s);
+      transition: background .12s;
     }
-    .trade-item:hover { background: #0D0F14; }
+    .trade-item:hover { background: var(--surface-h); }
+    .trade-item:last-child { border-bottom: none; }
 
     .action-badge {
-      width: 36px;
-      height: 36px;
-      border-radius: 9px;
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      font-weight: 800;
+      font-size: 10px;
+      font-weight: 700;
       flex-shrink: 0;
-      letter-spacing: .05em;
-      margin-top: 2px;
+      letter-spacing: .04em;
+      margin-top: 1px;
+      font-family: 'Inter', sans-serif;
     }
-    .action-buy  { background: #0D2A1A; color: #34C77B; border: 1px solid #34C77B30; }
-    .action-sell { background: #2A0D0D; color: #FF5A5A; border: 1px solid #FF5A5A30; }
+    .action-buy  { background: #0D3B2C; color: var(--profit); border: 1px solid #1D5C43; }
+    .action-sell { background: #2E1515; color: var(--loss); border: 1px solid #4A2020; }
 
     .trade-info { flex: 1; min-width: 0; }
     .trade-symbol {
-      font-weight: 700;
+      font-weight: 600;
       font-size: 13px;
-      color: #E8EAF0;
+      color: var(--text);
       display: flex;
       align-items: center;
       gap: 6px;
       flex-wrap: wrap;
+      font-family: 'Inter', sans-serif;
     }
     .exchange-tag {
       font-size: 9px;
       font-weight: 500;
-      color: #5C6480;
-      background: #13161E;
-      border: 1px solid #1E2230;
+      color: var(--text3);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 4px;
       padding: 1px 5px;
+      font-family: 'Inter', sans-serif;
     }
     .trade-detail {
       font-size: 11px;
-      color: #5C6480;
-      margin-top: 2px;
+      color: var(--text3);
+      margin-top: 3px;
+      font-family: 'Geist Mono', monospace;
     }
-    .trade-detail span { color: #9BA3B8; }
+    .trade-detail span { color: var(--text2); }
 
     .trade-controls {
       display: flex;
       gap: 6px;
-      margin-top: 5px;
+      margin-top: 6px;
       flex-wrap: wrap;
     }
     .emotion-select, .notes-input {
-      background: #13161E;
-      border: 1px solid #1E2230;
-      color: #5C6480;
-      border-radius: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text3);
+      border-radius: 6px;
       font-size: 10px;
-      padding: 2px 5px;
+      padding: 3px 7px;
       cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .15s;
     }
     .emotion-select { min-width: 110px; }
     .notes-input {
       flex: 1;
       min-width: 100px;
       cursor: text;
-      color: #9BA3B8;
+      color: var(--text2);
     }
-    .notes-input::placeholder { color: #3D4255; }
-    .emotion-select:hover, .notes-input:hover { border-color: #252A38; }
-    .notes-input:focus { outline: none; border-color: #4F7EFF40; color: #E8EAF0; }
+    .notes-input::placeholder { color: var(--text3); }
+    .emotion-select:hover, .notes-input:hover { border-color: var(--border); }
+    .notes-input:focus { outline: none; border-color: var(--emerald); color: var(--text); }
 
     .trade-right { text-align: right; flex-shrink: 0; }
     .trade-pnl {
+      font-family: 'Geist Mono', monospace;
       font-size: 13px;
-      font-weight: 700;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
     }
-    .trade-time { font-size: 10px; color: #5C6480; margin-top: 2px; }
+    .trade-time {
+      font-size: 10px;
+      color: var(--text3);
+      margin-top: 3px;
+      font-family: 'Geist Mono', monospace;
+    }
 
     /* ── PRODUCT TAG ── */
     .product-tag {
@@ -300,11 +362,12 @@
       padding: 1px 5px;
       border-radius: 4px;
       font-weight: 600;
+      font-family: 'Inter', sans-serif;
     }
-    .product-mis  { background: #1A1E2A; color: #9BA3B8; }
-    .product-cnc  { background: #001A30; color: #4F7EFF; }
-    .product-fno  { background: #1A0030; color: #A855F7; }
-    .product-nrml { background: #1A0030; color: #A855F7; }
+    .product-mis  { background: var(--surface); color: var(--text3); }
+    .product-cnc  { background: #12213A; color: #7BAEF5; }
+    .product-fno  { background: #1A1030; color: #9B7AE8; }
+    .product-nrml { background: #1A1030; color: #9B7AE8; }
 
     /* ── SUMMARY TAB ── */
     .summary-view {
@@ -314,15 +377,17 @@
       gap: 10px;
       overflow-y: auto;
       flex: 1;
+      background: var(--bg);
     }
     .summary-view.active { display: flex; }
-    .summary-section { }
     .summary-title {
       font-size: 10px;
-      color: #5C6480;
+      font-weight: 500;
+      color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .07em;
       margin-bottom: 8px;
+      font-family: 'Inter', sans-serif;
     }
     .summary-grid {
       display: grid;
@@ -330,27 +395,120 @@
       gap: 6px;
     }
     .summary-card {
-      background: #0D0F14;
-      border: 1px solid #1E2230;
-      border-radius: 8px;
-      padding: 10px 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 13px;
     }
     .summary-card .s-val {
+      font-family: 'Geist Mono', monospace;
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 600;
       font-variant-numeric: tabular-nums;
       display: block;
     }
     .summary-card .s-lbl {
       font-size: 10px;
-      color: #5C6480;
-      margin-top: 2px;
+      color: var(--text3);
+      margin-top: 3px;
       display: block;
+      font-family: 'Inter', sans-serif;
     }
     .divider {
       height: 1px;
-      background: #1E2230;
+      background: var(--border-s);
     }
+
+    /* ── DEBRIEF ── */
+    .debrief-view {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding: 12px 16px;
+      overflow-y: auto;
+      flex: 1;
+      background: var(--bg);
+    }
+    .debrief-view.active { display: flex; }
+    .debrief-header {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+      font-family: 'Inter', sans-serif;
+    }
+    .debrief-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .debrief-card.loss   { border-left: 2px solid var(--loss); }
+    .debrief-card.win    { border-left: 2px solid var(--profit); }
+    .debrief-card.neutral { border-left: 2px solid var(--blue); }
+    .debrief-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+    .debrief-value { font-size: 13px; color: var(--text); font-family: 'Inter', sans-serif; }
+    .debrief-insight { font-size: 11px; color: var(--loss); margin-top: 5px; }
+    .debrief-insight.positive { color: var(--profit); }
+    .debrief-insight.neutral  { color: var(--blue); }
+
+    .checklist-title {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text3);
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      font-family: 'Inter', sans-serif;
+    }
+    .checklist { display: flex; flex-direction: column; gap: 6px; }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 13px;
+      cursor: pointer;
+      transition: background .12s;
+    }
+    .check-item:hover { background: var(--surface-h); }
+    .check-item input[type=checkbox] {
+      width: 15px; height: 15px;
+      accent-color: var(--emerald-b);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .check-item label { font-size: 12px; color: var(--text); cursor: pointer; flex: 1; font-family: 'Inter', sans-serif; }
+    .check-item.checked label { text-decoration: line-through; color: var(--text3); }
+
+    .streak-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 11px 14px;
+    }
+    .streak-num {
+      font-family: 'Geist Mono', monospace;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--emerald-b);
+    }
+    .streak-info { display: flex; flex-direction: column; gap: 1px; }
+    .streak-label { font-size: 10px; color: var(--text3); font-family: 'Inter', sans-serif; text-transform: uppercase; letter-spacing: .06em; }
+    .streak-msg { font-size: 12px; color: var(--text); font-weight: 500; font-family: 'Inter', sans-serif; }
 
     /* ── EMPTY STATE ── */
     .empty-state {
@@ -358,29 +516,106 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 40px 24px;
+      padding: 48px 32px;
       text-align: center;
     }
     .empty-state.show { display: flex; }
-    .empty-icon { font-size: 32px; margin-bottom: 10px; opacity: .4; }
-    .empty-title { font-weight: 600; color: #9BA3B8; margin-bottom: 6px; }
-    .empty-desc { font-size: 12px; color: #5C6480; line-height: 1.6; max-width: 220px; }
+    .empty-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .empty-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-family: 'Inter', sans-serif;
+    }
+    .empty-desc {
+      font-size: 12px;
+      color: var(--text3);
+      line-height: 1.65;
+      max-width: 220px;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* ── UPGRADE BANNER ── */
+    .upgrade-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #0C2520;
+      border-top: 1px solid #1A4035;
+      border-bottom: 1px solid #1A4035;
+      flex-shrink: 0;
+    }
+    .upgrade-banner.hidden { display: none; }
+    .upgrade-text {
+      font-size: 12px;
+      color: var(--text2);
+      line-height: 1.4;
+      font-family: 'Inter', sans-serif;
+    }
+    .upgrade-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .upgrade-btn {
+      background: var(--emerald-b);
+      color: #060A08;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 14px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+    .upgrade-btn:hover { background: #2BBDAA; }
+    .upgrade-dismiss {
+      font-size: 18px;
+      color: var(--text3);
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 0 0 2px;
+      flex-shrink: 0;
+      transition: color .15s;
+    }
+    .upgrade-dismiss:hover { color: var(--text2); }
 
     /* ── FOOTER ── */
     .footer {
-      padding: 7px 16px;
-      border-top: 1px solid #1E2230;
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
       flex-shrink: 0;
+      background: var(--bg2);
     }
-    .footer-text { font-size: 11px; color: #5C6480; }
-    .source-dots { display: flex; gap: 5px; align-items: center; }
+    .footer-text {
+      font-size: 11px;
+      color: var(--text3);
+      font-family: 'Inter', sans-serif;
+    }
+    .source-dots { display: flex; gap: 6px; align-items: center; }
     .source-dot {
-      width: 6px; height: 6px;
+      width: 5px; height: 5px;
       border-radius: 50%;
-      opacity: .3;
+      opacity: .2;
       transition: opacity .2s;
     }
     .source-dot.active { opacity: 1; }
@@ -391,62 +626,16 @@
 
     .clear-btn {
       font-size: 11px;
-      color: #FF5A5A;
+      font-weight: 500;
+      color: var(--text3);
       background: none;
       border: none;
       cursor: pointer;
-      opacity: .6;
+      opacity: .7;
+      font-family: 'Inter', sans-serif;
+      transition: color .15s, opacity .15s;
     }
-    .clear-btn:hover { opacity: 1; }
-
-    /* ── UPGRADE BANNER ── */
-    .upgrade-banner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 16px;
-      background: #0D2A1A;
-      border-top: 1px solid #34C77B20;
-      border-bottom: 1px solid #34C77B20;
-      flex-shrink: 0;
-    }
-    .upgrade-banner.hidden { display: none; }
-    .upgrade-text {
-      font-size: 12px;
-      color: #9BA3B8;
-      line-height: 1.4;
-    }
-    .upgrade-text strong {
-      color: #E8EAF0;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-    }
-    .upgrade-btn {
-      background: #34C77B;
-      color: #080A0E;
-      border: none;
-      border-radius: 6px;
-      padding: 7px 14px;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .upgrade-btn:hover { background: #2ECC78; }
-    .upgrade-dismiss {
-      font-size: 16px;
-      color: #3A3F52;
-      background: none;
-      border: none;
-      cursor: pointer;
-      line-height: 1;
-      padding: 0 0 0 4px;
-      flex-shrink: 0;
-    }
-    .upgrade-dismiss:hover { color: #9BA3B8; }
+    .clear-btn:hover { opacity: 1; color: var(--loss); }
   </style>
 </head>
 <body>
@@ -454,42 +643,49 @@
   <!-- HEADER -->
   <div class="header">
     <div class="logo">
-      <div class="logo-icon">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <polyline points="1,13 5,8 8,10 11,5 15,6" stroke="#34C77B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <div class="logo-mark">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <polyline points="1,11 4,7 7,9 10,4 12,5" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </div>
       TradeLog
     </div>
     <div class="header-right">
-      <button class="export-btn" id="export-btn">⬇ Export</button>
-      <div id="market-status" class="market-status market-closed">MARKET CLOSED</div>
+      <button class="export-btn" id="export-btn">
+        <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+          <path d="M5.5 1v6M2.5 5l3 3 3-3M1 9.5h9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Export
+      </button>
+      <div id="market-status" class="market-status market-closed">CLOSED</div>
     </div>
   </div>
 
-  <!-- P&L STRIP -->
-  <div class="pnl-strip">
-    <div class="pnl-cell">
-      <span class="val" id="today-pnl">+₹0</span>
-      <span class="lbl">Today P&L</span>
-    </div>
-    <div class="pnl-cell">
-      <span class="val white" id="today-trades">0</span>
-      <span class="lbl">Trades Today</span>
-    </div>
-    <div class="pnl-cell">
-      <span class="val blue" id="win-rate">0%</span>
-      <span class="lbl">Win Rate</span>
-    </div>
-    <div class="pnl-cell">
-      <span class="val white" id="total-pnl">+₹0</span>
-      <span class="lbl">All Time P&L</span>
+  <!-- P&L HERO -->
+  <div class="pnl-hero">
+    <div class="pnl-main-label">Today's P&amp;L</div>
+    <div class="pnl-main-val" id="today-pnl">+₹0</div>
+    <div class="pnl-row">
+      <div class="pnl-cell">
+        <span class="val white" id="today-trades">0</span>
+        <span class="lbl">Trades</span>
+      </div>
+      <div class="pnl-cell">
+        <span class="val blue" id="win-rate">0%</span>
+        <span class="lbl">Win Rate</span>
+      </div>
+      <div class="pnl-cell">
+        <span class="val white" id="total-pnl">+₹0</span>
+        <span class="lbl">All Time</span>
+      </div>
     </div>
   </div>
 
   <!-- 7-DAY CHART -->
   <div class="chart-section">
-    <div class="chart-label">7-Day P&L</div>
+    <div class="chart-header">
+      <div class="chart-label">7-Day Performance</div>
+    </div>
     <div class="chart-bars" id="chart-bars">
       <!-- rendered by JS -->
     </div>
@@ -509,87 +705,80 @@
   <div class="trade-list" id="trade-list">
     <div class="empty-state" id="empty-state">
       <div class="empty-icon">
-        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" opacity="0.3">
-          <polyline points="3,30 10,18 16,23 23,12 33,15" stroke="#34C77B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+          <polyline points="2,18 7,11 11,14 15,7 20,9" stroke="#35C995" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/>
         </svg>
       </div>
-      <div class="empty-title">Watching the markets</div>
-      <div class="empty-desc">Place a trade on Zerodha, Groww or Upstox — it'll appear here automatically.</div>
+      <div class="empty-title">Your journal starts here</div>
+      <div class="empty-desc">Place a trade on Zerodha, Groww, Upstox or Angel One — it'll appear here automatically.</div>
     </div>
   </div>
 
   <!-- SUMMARY VIEW -->
   <div class="summary-view" id="summary-view">
-    <div class="summary-section">
-      <div class="summary-title">This Week</div>
-      <div class="summary-grid">
-        <div class="summary-card">
-          <span class="s-val" id="week-pnl">+₹0</span>
-          <span class="s-lbl">Week P&L</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val white" id="week-trades">0</span>
-          <span class="s-lbl">Trades</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val blue" id="week-winrate">0%</span>
-          <span class="s-lbl">Win Rate</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val green" id="week-best">+₹0</span>
-          <span class="s-lbl">Best Trade</span>
-        </div>
+    <div class="summary-title">This Week</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <span class="s-val profit" id="week-pnl">+₹0</span>
+        <span class="s-lbl">Week P&L</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val white" id="week-trades">0</span>
+        <span class="s-lbl">Trades</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val blue" id="week-winrate">0%</span>
+        <span class="s-lbl">Win Rate</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val profit" id="week-best">+₹0</span>
+        <span class="s-lbl">Best Trade</span>
       </div>
     </div>
     <div class="divider"></div>
-    <div class="summary-section">
-      <div class="summary-title">This Month</div>
-      <div class="summary-grid">
-        <div class="summary-card">
-          <span class="s-val" id="month-pnl">+₹0</span>
-          <span class="s-lbl">Month P&L</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val white" id="month-trades">0</span>
-          <span class="s-lbl">Trades</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val blue" id="month-winrate">0%</span>
-          <span class="s-lbl">Win Rate</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val red" id="month-worst">-₹0</span>
-          <span class="s-lbl">Worst Trade</span>
-        </div>
+    <div class="summary-title">This Month</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <span class="s-val profit" id="month-pnl">+₹0</span>
+        <span class="s-lbl">Month P&L</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val white" id="month-trades">0</span>
+        <span class="s-lbl">Trades</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val blue" id="month-winrate">0%</span>
+        <span class="s-lbl">Win Rate</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val loss" id="month-worst">-₹0</span>
+        <span class="s-lbl">Worst Trade</span>
       </div>
     </div>
     <div class="divider"></div>
-    <div class="summary-section">
-      <div class="summary-title">All Time</div>
-      <div class="summary-grid">
-        <div class="summary-card">
-          <span class="s-val green" id="all-best-day">+₹0</span>
-          <span class="s-lbl">Best Day</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val red" id="all-worst-day">-₹0</span>
-          <span class="s-lbl">Worst Day</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val white" id="all-total-trades">0</span>
-          <span class="s-lbl">Total Trades</span>
-        </div>
-        <div class="summary-card">
-          <span class="s-val blue" id="all-winrate">0%</span>
-          <span class="s-lbl">Win Rate</span>
-        </div>
+    <div class="summary-title">All Time</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <span class="s-val profit" id="all-best-day">+₹0</span>
+        <span class="s-lbl">Best Day</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val loss" id="all-worst-day">-₹0</span>
+        <span class="s-lbl">Worst Day</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val white" id="all-total-trades">0</span>
+        <span class="s-lbl">Total Trades</span>
+      </div>
+      <div class="summary-card">
+        <span class="s-val blue" id="all-winrate">0%</span>
+        <span class="s-lbl">Win Rate</span>
       </div>
     </div>
   </div>
 
   <!-- DEBRIEF VIEW -->
   <div class="debrief-view" id="debrief-view">
-    <!-- streak -->
     <div class="streak-bar">
       <div class="streak-num" id="streak-num">0</div>
       <div class="streak-info">
@@ -598,8 +787,7 @@
       </div>
     </div>
 
-    <!-- why did I lose today -->
-    <div class="debrief-header">Why did I lose today?</div>
+    <div class="debrief-header">Session analysis</div>
     <div id="debrief-analysis">
       <div class="debrief-card neutral">
         <div class="debrief-label">Analysis</div>
@@ -608,28 +796,28 @@
       </div>
     </div>
 
-    <!-- loss limit setting -->
-    <div class="debrief-header" style="margin-top:4px">Daily Loss Limit</div>
-    <div class="debrief-card neutral" style="display:flex;align-items:center;gap:10px;padding:10px 12px;">
-      <span style="font-size:13px;color:#9BA3B8;white-space:nowrap;">₹</span>
+    <div class="debrief-header" style="margin-top:2px">Daily Loss Limit</div>
+    <div class="debrief-card neutral" style="display:flex;align-items:center;gap:10px;padding:10px 13px;">
+      <span style="font-size:13px;color:var(--text3);white-space:nowrap;font-family:'Geist Mono',monospace;">₹</span>
       <input type="number" id="loss-limit-input" placeholder="e.g. 5000"
-        style="flex:1;background:#0A0C10;border:1px solid #1E2230;border-radius:6px;
-               color:#E8EAF0;font-size:13px;padding:6px 10px;outline:none;min-width:0;"
+        style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+               color:var(--text);font-size:13px;padding:7px 10px;outline:none;min-width:0;
+               font-family:'Geist Mono',monospace;transition:border-color .15s;"
         min="0" step="100">
       <button id="loss-limit-save"
-        style="background:#4F7EFF20;border:1px solid #4F7EFF50;color:#4F7EFF;
-               border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">
+        style="background:var(--surface);border:1px solid var(--border);color:var(--text2);
+               border-radius:8px;padding:7px 13px;font-size:11px;font-weight:600;cursor:pointer;
+               white-space:nowrap;font-family:'Inter',sans-serif;transition:all .15s;">
         Save
       </button>
     </div>
-    <div id="loss-limit-status" style="font-size:11px;color:#5C6480;margin-top:-4px;padding:0 2px;min-height:16px;"></div>
+    <div id="loss-limit-status" style="font-size:11px;color:var(--text3);margin-top:-4px;padding:0 2px;min-height:16px;font-family:'Inter',sans-serif;"></div>
 
-    <!-- pre-market checklist -->
     <div class="checklist-title">Pre-Market Checklist</div>
     <div class="checklist" id="checklist">
       <div class="check-item" id="ci1">
         <input type="checkbox" id="c1">
-        <label for="c1">Checked Nifty trend & SGX Nifty</label>
+        <label for="c1">Checked Nifty trend &amp; SGX Nifty</label>
       </div>
       <div class="check-item" id="ci2">
         <input type="checkbox" id="c2">
@@ -650,7 +838,7 @@
     </div>
   </div>
 
-  <!-- UPGRADE BANNER (shown to free users) -->
+  <!-- UPGRADE BANNER -->
   <div class="upgrade-banner" id="upgrade-banner">
     <div class="upgrade-text">
       <strong>TradeLog Free</strong><br>
@@ -667,9 +855,9 @@
       <div class="source-dot dot-groww" id="dot-groww" title="Groww"></div>
       <div class="source-dot dot-upstox" id="dot-upstox" title="Upstox"></div>
       <div class="source-dot dot-angelone" id="dot-angelone" title="Angel One"></div>
-      <span class="footer-text" style="margin-left:4px" id="footer-text">Zero clicks needed</span>
+      <span class="footer-text" style="margin-left:5px" id="footer-text">Zero clicks needed</span>
     </div>
-    <button class="clear-btn" id="clear-btn">Clear</button>
+    <button class="clear-btn" id="clear-btn">Clear data</button>
   </div>
 
   <script src="popup.js"></script>
