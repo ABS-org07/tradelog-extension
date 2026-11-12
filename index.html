@@ -449,7 +449,10 @@
     <div class="logo-icon">T</div>
     TradeLog
   </a>
-  <span class="nav-badge">Free · No signup</span>
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="#pricing" style="font-size:13px;font-weight:600;color:var(--fg2);text-decoration:none;">Pricing</a>
+    <span class="nav-badge">Free · No signup</span>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -624,45 +627,78 @@
   </div>
 </div>
 
-<!-- PRO TIER -->
-<div style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:60px 0;margin-top:0;">
+<!-- PRICING -->
+<div id="pricing" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:72px 0;">
   <div style="max-width:900px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));">
-    <div style="display:inline-block;background:#4F7EFF22;border:1px solid #4F7EFF55;color:#4F7EFF;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px;">Coming Soon — TradeLog Pro</div>
-    <h2 style="font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:800;color:var(--fg);margin-bottom:8px;">Serious traders need serious tools.</h2>
-    <p style="color:var(--fg2);font-size:15px;margin-bottom:32px;max-width:560px;">TradeLog Pro is in development. Early users get lifetime access free.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;">
-        <div style="font-size:20px;margin-bottom:8px;">🧠</div>
-        <div style="font-weight:700;color:var(--fg);margin-bottom:4px;">Why Did I Lose?</div>
-        <div style="font-size:13px;color:var(--fg2);">Auto-analysis of your losing trades — overtrading, revenge trades, FOMO entries detected automatically.</div>
-        <div style="font-size:11px;color:#34C77B;margin-top:8px;font-weight:600;">✅ Available now in Debrief tab</div>
-      </div>
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;">
-        <div style="font-size:20px;margin-bottom:8px;">📊</div>
-        <div style="font-weight:700;color:var(--fg);margin-bottom:4px;">Nifty Comparison</div>
-        <div style="font-size:13px;color:var(--fg2);">See if you beat Nifty on any given day. Know when the market moved without you.</div>
-        <div style="font-size:11px;color:#4F7EFF;margin-top:8px;font-weight:600;">🔜 Coming in Pro</div>
-      </div>
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;">
-        <div style="font-size:20px;margin-bottom:8px;">📅</div>
-        <div style="font-weight:700;color:var(--fg);margin-bottom:4px;">Weekly Report</div>
-        <div style="font-size:13px;color:var(--fg2);">Auto-generated PDF every Sunday. Your week in numbers — no manual work.</div>
-        <div style="font-size:11px;color:#4F7EFF;margin-top:8px;font-weight:600;">🔜 Coming in Pro</div>
-      </div>
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:20px;">
-        <div style="font-size:20px;margin-bottom:8px;">⏰</div>
-        <div style="font-weight:700;color:var(--fg);margin-bottom:4px;">Best Time Analysis</div>
-        <div style="font-size:13px;color:var(--fg2);">Find out which hours you're most profitable. Stop trading when you consistently lose.</div>
-        <div style="font-size:11px;color:#4F7EFF;margin-top:8px;font-weight:600;">🔜 Coming in Pro</div>
-      </div>
+    <div style="text-align:center;margin-bottom:48px;">
+      <div style="display:inline-block;background:#34C77B22;border:1px solid #34C77B55;color:#34C77B;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:16px;">Simple Pricing</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif;font-size:clamp(26px,4vw,36px);font-weight:800;color:var(--fg);letter-spacing:-.02em;margin-bottom:10px;">Start free. Upgrade when ready.</h2>
+      <p style="color:var(--fg2);font-size:15px;max-width:480px;margin:0 auto;">No credit card to start. No hidden fees. Cancel anytime.</p>
     </div>
-    <div style="margin-top:28px;padding:20px;background:linear-gradient(135deg,#34C77B15,#4F7EFF15);border:1px solid #34C77B44;border-radius:12px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-      <div>
-        <div style="font-weight:700;color:var(--fg);font-size:15px;">🎁 First 50 users get Pro free for life</div>
-        <div style="font-size:13px;color:var(--fg2);margin-top:2px;">Install now while it's free. Early users locked in forever.</div>
+
+    <!-- Pricing cards -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;align-items:start;">
+
+      <!-- FREE -->
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--fg3);margin-bottom:14px;">Free</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:800;color:var(--fg);line-height:1;margin-bottom:4px;">₹0</div>
+        <div style="font-size:13px;color:var(--fg3);margin-bottom:24px;">Forever free, no card needed</div>
+        <a href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank" style="display:block;text-align:center;background:var(--bg2);border:1px solid var(--border);color:var(--fg2);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;padding:11px 20px;border-radius:9px;text-decoration:none;margin-bottom:24px;transition:border-color .15s;">Install Free →</a>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>50 trades per month</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Auto-capture on Zerodha &amp; Groww</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Today's P&amp;L + 7-day chart</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Emotion tagging + trade notes</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Pre-market checklist</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg3);"><span style="color:var(--fg3);flex-shrink:0;margin-top:1px;">✗</span>CSV export</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg3);"><span style="color:var(--fg3);flex-shrink:0;margin-top:1px;">✗</span>3:35 PM daily notification</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg3);"><span style="color:var(--fg3);flex-shrink:0;margin-top:1px;">✗</span>Loss limit alert</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg3);"><span style="color:var(--fg3);flex-shrink:0;margin-top:1px;">✗</span>Month &amp; all-time summary</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg3);"><span style="color:var(--fg3);flex-shrink:0;margin-top:1px;">✗</span>Upstox &amp; Angel One support</div>
+        </div>
       </div>
-      <a href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank" style="background:var(--green);color:#000;font-weight:700;font-size:14px;padding:10px 20px;border-radius:8px;text-decoration:none;white-space:nowrap;">Install Free Now →</a>
+
+      <!-- PRO MONTHLY -->
+      <div style="background:linear-gradient(145deg,#0D1A2A,#0A1020);border:1px solid #4F7EFF55;border-radius:16px;padding:28px;position:relative;box-shadow:0 0 40px #4F7EFF18;">
+        <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:3px 14px;border-radius:20px;white-space:nowrap;letter-spacing:.04em;">MOST POPULAR</div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#4F7EFF;margin-bottom:14px;">Pro Monthly</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:800;color:var(--fg);line-height:1;margin-bottom:4px;">₹149<span style="font-size:16px;font-weight:500;color:var(--fg3)">/mo</span></div>
+        <div style="font-size:13px;color:var(--fg3);margin-bottom:24px;">Billed monthly · cancel anytime</div>
+        <a href="mailto:ankitsinghbainsla07@gmail.com?subject=TradeLog Pro Monthly&body=Hi, I want to subscribe to TradeLog Pro at ₹149/month." style="display:block;text-align:center;background:var(--blue);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;padding:11px 20px;border-radius:9px;text-decoration:none;margin-bottom:24px;">Get Pro Monthly →</a>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span><strong style="color:var(--fg)">Unlimited trades</strong></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>All 4 platforms — Zerodha, Groww, Upstox, Angel One</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Everything in Free</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>🔔 3:35 PM daily P&amp;L notification</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>⚠️ Loss limit alert — stop trading warning</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>📊 Month &amp; all-time P&amp;L summary</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>⬇ CSV export to Excel</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Debrief — why did I lose today?</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Priority support</div>
+        </div>
+      </div>
+
+      <!-- LIFETIME -->
+      <div style="background:linear-gradient(145deg,#0D1A14,#0A100A);border:1px solid #34C77B55;border-radius:16px;padding:28px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:14px;">Pro Lifetime</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:40px;font-weight:800;color:var(--fg);line-height:1;margin-bottom:4px;">₹999<span style="font-size:16px;font-weight:500;color:var(--fg3)">&nbsp;once</span></div>
+        <div style="font-size:13px;color:var(--fg3);margin-bottom:24px;">Pay once · own it forever</div>
+        <a href="mailto:ankitsinghbainsla07@gmail.com?subject=TradeLog Pro Lifetime&body=Hi, I want to buy TradeLog Pro Lifetime access at ₹999." style="display:block;text-align:center;background:var(--green);color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:14px;padding:11px 20px;border-radius:9px;text-decoration:none;margin-bottom:24px;">Get Lifetime Access →</a>
+        <div style="display:flex;flex-direction:column;gap:11px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Everything in Pro Monthly</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>All future Pro features — no extra charge</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span>Saves ₹1,788/year vs monthly</div>
+          <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--fg2);"><span style="color:var(--green);flex-shrink:0;margin-top:1px;">✓</span><strong style="color:var(--fg)">Limited — only 100 lifetime slots</strong></div>
+        </div>
+        <div style="margin-top:20px;padding:12px;background:#34C77B15;border:1px solid #34C77B30;border-radius:8px;font-size:12px;color:#34C77B;text-align:center;font-weight:600;">
+          🎁 Early supporter price — goes up after 100 users
+        </div>
+      </div>
+
     </div>
+
+    <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--fg3);">Payment via UPI / bank transfer. We'll activate your account within 24 hours. Questions? Email us.</p>
   </div>
 </div>
 
