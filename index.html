@@ -1445,10 +1445,16 @@ footer {
       })
     }).catch(() => {});
     setTimeout(() => {
-      window.open(PAYMENT_LINKS[activeCurrency][plan], '_blank');
+      // Append customer email to Cashfree link so webhook auto-receives it
+      let payUrl = PAYMENT_LINKS[activeCurrency][plan];
+      if (activeCurrency === 'inr' && contact.includes('@')) {
+        payUrl += '&customerEmail=' + encodeURIComponent(contact)
+                + '&customerName='  + encodeURIComponent(name);
+      }
+      window.open(payUrl, '_blank');
       btn.textContent = 'Pay Now →'; btn.disabled = false;
       msg.style.color = 'var(--profit)';
-      msg.textContent = 'Payment page opened — complete payment to activate Pro.';
+      msg.textContent = '✓ Payment page opened — your license key will be emailed after payment.';
     }, 400);
   });
 })();
