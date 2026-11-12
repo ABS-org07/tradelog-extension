@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>TradeLog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -32,20 +34,20 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
       font-size: 15px;
       letter-spacing: -.3px;
+      color: #E8EAF0;
     }
     .logo-icon {
       width: 26px; height: 26px;
-      background: linear-gradient(135deg, #34C77B, #4F7EFF);
+      background: #0D2A1A;
+      border: 1px solid #34C77B30;
       border-radius: 7px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 800;
-      color: white;
     }
     .header-right { display: flex; align-items: center; gap: 8px; }
     .market-status {
@@ -85,17 +87,18 @@
       text-align: center;
     }
     .pnl-cell .val {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 700;
       font-variant-numeric: tabular-nums;
       letter-spacing: -.3px;
       display: block;
     }
     .pnl-cell .lbl {
-      font-size: 10px;
+      font-size: 9px;
       color: #5C6480;
       text-transform: uppercase;
-      letter-spacing: .06em;
+      letter-spacing: .08em;
       margin-top: 2px;
       display: block;
     }
@@ -402,7 +405,11 @@
   <!-- HEADER -->
   <div class="header">
     <div class="logo">
-      <div class="logo-icon">T</div>
+      <div class="logo-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <polyline points="1,13 5,8 8,10 11,5 15,6" stroke="#34C77B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       TradeLog
     </div>
     <div class="header-right">
@@ -452,7 +459,11 @@
   <!-- TRADE LIST -->
   <div class="trade-list" id="trade-list">
     <div class="empty-state" id="empty-state">
-      <div class="empty-icon">📈</div>
+      <div class="empty-icon">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" opacity="0.3">
+          <polyline points="3,30 10,18 16,23 23,12 33,15" stroke="#34C77B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <div class="empty-title">Watching the markets</div>
       <div class="empty-desc">Place a trade on Zerodha, Groww or Upstox — it'll appear here automatically.</div>
     </div>
@@ -533,7 +544,7 @@
     <div class="streak-bar">
       <div class="streak-num" id="streak-num">0</div>
       <div class="streak-info">
-        <span class="streak-label">Day streak 🔥</span>
+        <span class="streak-label">Day streak</span>
         <span class="streak-msg" id="streak-msg">Place a trade to start your streak</span>
       </div>
     </div>
@@ -549,7 +560,7 @@
     </div>
 
     <!-- loss limit setting -->
-    <div class="debrief-header" style="margin-top:4px">🛑 Daily Loss Limit</div>
+    <div class="debrief-header" style="margin-top:4px">Daily Loss Limit</div>
     <div class="debrief-card neutral" style="display:flex;align-items:center;gap:10px;padding:10px 12px;">
       <span style="font-size:13px;color:#9BA3B8;white-space:nowrap;">₹</span>
       <input type="number" id="loss-limit-input" placeholder="e.g. 5000"
