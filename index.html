@@ -1164,7 +1164,7 @@ footer {
     <!-- PRO FORM -->
     <div id="pro-form" class="pro-form-wrap">
       <h3>Get TradeLog Pro</h3>
-      <p class="sub">Fill this in — we'll send you the payment link on WhatsApp or email within a few hours.</p>
+      <p class="sub">Fill in your details and pay instantly via UPI, card or net banking.</p>
 
       <div class="form-plan-toggle">
         <label class="plan-tog">
@@ -1186,11 +1186,11 @@ footer {
       <div class="form-fields">
         <input class="f-input" id="pf-name" type="text" placeholder="Your name" autocomplete="name">
         <input class="f-input" id="pf-email" type="text" placeholder="Email or WhatsApp number">
-        <button class="f-submit" id="pf-submit">Request Pro Access →</button>
+        <button class="f-submit" id="pf-submit">Pay Now →</button>
         <div class="f-msg" id="pf-msg"></div>
       </div>
 
-      <p class="form-footnote">We respond within a few hours · Payment via UPI · 100% refund if not satisfied</p>
+      <p class="form-footnote">Instant payment via UPI / Card / Net Banking · 100% refund if not satisfied</p>
     </div>
   </div>
 </div>
@@ -1283,6 +1283,12 @@ footer {
     });
   });
 
+  // Payment links
+  const PAYMENT_LINKS = {
+    monthly:  'https://payments.cashfree.com/links?code=Uba9elfdujhg_AAAAAAAXTC4',
+    lifetime: 'https://payments.cashfree.com/links?code=Jba9eiroqmg0_AAAAAAAXTC4'
+  };
+
   // Form submit
   document.getElementById('pf-submit').addEventListener('click', async () => {
     const name = document.getElementById('pf-name').value.trim();
@@ -1295,30 +1301,27 @@ footer {
       return;
     }
     const btn = document.getElementById('pf-submit');
-    btn.textContent = 'Sending…'; btn.disabled = true;
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          access_key: 'ce0788aa-2361-4e07-80ce-622fdc653453',
-          email: 'NOWYOUCANMAILMEE@gmail.com',
-          from_name: name,
-          subject: 'TradeLog Pro Request — ' + (plan === 'lifetime' ? '₹999 Lifetime' : '₹149 Monthly'),
-          contact,
-          plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149'
-        })
-      });
-      if (res.ok) {
-        btn.style.display = 'none';
-        msg.style.color = 'var(--green)';
-        msg.textContent = 'Done! We\'ll WhatsApp / email you the payment link shortly.';
-      } else { throw new Error(); }
-    } catch(e) {
-      btn.textContent = 'Request Pro Access →'; btn.disabled = false;
-      msg.style.color = 'var(--red)';
-      msg.textContent = 'Something went wrong. Email us at ankitsinghbainsla07@gmail.com';
-    }
+    btn.textContent = 'Processing…'; btn.disabled = true;
+    // Fire Web3Forms in background to log the lead
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: 'ce0788aa-2361-4e07-80ce-622fdc653453',
+        email: 'NOWYOUCANMAILMEE@gmail.com',
+        from_name: name,
+        subject: 'TradeLog Pro Purchase — ' + (plan === 'lifetime' ? '₹999 Lifetime' : '₹149 Monthly'),
+        contact,
+        plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149'
+      })
+    }).catch(() => {});
+    // Redirect to Cashfree payment link
+    setTimeout(() => {
+      window.open(PAYMENT_LINKS[plan], '_blank');
+      btn.textContent = 'Pay Now →'; btn.disabled = false;
+      msg.style.color = 'var(--green)';
+      msg.textContent = 'Payment page opened! Complete payment to activate Pro.';
+    }, 400);
   });
 })();
 </script>
