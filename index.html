@@ -759,7 +759,7 @@
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ access_key: '00000000-0000-0000-0000-000000000000', email: 'NOWYOUCANMAILMEE@gmail.com', from_name: name, subject: 'TradeLog Pro Request — ' + (plan === 'lifetime' ? '₹999 Lifetime' : '₹149 Monthly'), contact, plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149' })
+        body: JSON.stringify({ access_key: 'ce0788aa-2361-4e07-80ce-622fdc653453', email: 'NOWYOUCANMAILMEE@gmail.com', from_name: name, subject: 'TradeLog Pro Request — ' + (plan === 'lifetime' ? '₹999 Lifetime' : '₹149 Monthly'), contact, plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149' })
       });
       if (res.ok) {
         btn.style.display = 'none';
