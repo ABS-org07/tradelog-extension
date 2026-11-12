@@ -698,9 +698,81 @@
 
     </div>
 
-    <p style="text-align:center;margin-top:24px;font-size:12px;color:var(--fg3);">Payment via UPI / bank transfer. We'll activate your account within 24 hours. Questions? Email us.</p>
+    <!-- Interest form -->
+    <div id="pro-form" style="max-width:480px;margin:36px auto 0;background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:28px;">
+      <div style="font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:18px;color:var(--fg);margin-bottom:6px;">Get TradeLog Pro</div>
+      <p style="font-size:13px;color:var(--fg2);margin-bottom:22px;">Fill this in — we'll WhatsApp/email you the UPI link within a few hours.</p>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <input id="pf-name" type="text" placeholder="Your name" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--fg);font-size:14px;padding:11px 14px;outline:none;width:100%;">
+        <input id="pf-email" type="email" placeholder="Email or WhatsApp number" style="background:var(--bg2);border:1px solid var(--border);border-radius:8px;color:var(--fg);font-size:14px;padding:11px 14px;outline:none;width:100%;">
+        <div style="display:flex;gap:10px;">
+          <label id="lbl-monthly" style="flex:1;border:2px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;text-align:center;transition:border-color .15s;">
+            <input type="radio" name="plan" value="monthly" style="display:none;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);">₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span></div>
+            <div style="font-size:11px;color:var(--fg3);margin-top:2px;">Monthly</div>
+          </label>
+          <label id="lbl-lifetime" style="flex:1;border:2px solid var(--green);border-radius:8px;padding:12px;cursor:pointer;text-align:center;background:#34C77B0D;transition:border-color .15s;">
+            <input type="radio" name="plan" value="lifetime" checked style="display:none;">
+            <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;color:var(--fg);">₹999<span style="font-size:11px;font-weight:500;color:var(--fg3)">&nbsp;once</span></div>
+            <div style="font-size:11px;color:var(--green);margin-top:2px;">Lifetime ✦ Best deal</div>
+          </label>
+        </div>
+        <button id="pf-submit" style="background:var(--green);color:#000;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;padding:13px;border-radius:9px;border:none;cursor:pointer;width:100%;">
+          Request Pro Access →
+        </button>
+        <div id="pf-msg" style="font-size:13px;text-align:center;min-height:18px;"></div>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:16px;font-size:12px;color:var(--fg3);">We respond within a few hours · Payment via UPI · 100% refund if not satisfied</p>
   </div>
 </div>
+
+<script>
+(function() {
+  // Plan radio styling
+  const radios = document.querySelectorAll('input[name="plan"]');
+  const lblMonthly = document.getElementById('lbl-monthly');
+  const lblLifetime = document.getElementById('lbl-lifetime');
+  radios.forEach(r => {
+    r.addEventListener('change', () => {
+      const isLifetime = document.querySelector('input[name="plan"]:checked').value === 'lifetime';
+      lblLifetime.style.border = isLifetime ? '2px solid var(--green)' : '2px solid var(--border)';
+      lblLifetime.style.background = isLifetime ? '#34C77B0D' : 'transparent';
+      lblMonthly.style.border = !isLifetime ? '2px solid var(--blue)' : '2px solid var(--border)';
+      lblMonthly.style.background = !isLifetime ? '#4F7EFF0D' : 'transparent';
+    });
+  });
+  lblMonthly.addEventListener('click', () => { document.querySelector('input[value="monthly"]').checked = true; document.querySelector('input[value="monthly"]').dispatchEvent(new Event('change')); });
+  lblLifetime.addEventListener('click', () => { document.querySelector('input[value="lifetime"]').checked = true; document.querySelector('input[value="lifetime"]').dispatchEvent(new Event('change')); });
+
+  // Submit → Formspree
+  document.getElementById('pf-submit').addEventListener('click', async () => {
+    const name = document.getElementById('pf-name').value.trim();
+    const contact = document.getElementById('pf-email').value.trim();
+    const plan = document.querySelector('input[name="plan"]:checked').value;
+    const msg = document.getElementById('pf-msg');
+    if (!name || !contact) { msg.style.color = '#FF5A5A'; msg.textContent = 'Please fill in your name and email/WhatsApp.'; return; }
+    const btn = document.getElementById('pf-submit');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    try {
+      const res = await fetch('https://formspree.io/f/xzzbnwok', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, contact, plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149' })
+      });
+      if (res.ok) {
+        btn.style.display = 'none';
+        msg.style.color = '#34C77B';
+        msg.textContent = '✅ Done! We\'ll WhatsApp/email you the payment link shortly.';
+      } else { throw new Error(); }
+    } catch(e) {
+      btn.textContent = 'Request Pro Access →'; btn.disabled = false;
+      msg.style.color = '#FF5A5A'; msg.textContent = 'Something went wrong. Email us at ankitsinghbainsla07@gmail.com';
+    }
+  });
+})();
+</script>
 
 <!-- FAQ — Rich Results for Google -->
 <div class="section" id="faq">
