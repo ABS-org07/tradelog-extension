@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "TradeLog - Auto Trade Journal",
-  "version": "1.3.2",
+  "version": "1.3.3",
  "description": "Auto-logs trades on Zerodha, Groww, Upstox & Angel One. Zero clicks. P&L calculated automatically. Export to Excel. Stays local.",
   "permissions": [
     "storage",

@@ -2,9 +2,70 @@
 
 let allTrades = [];
 let currentFilter = 'today';
+let isSampleMode = false;
+
+// ── SAMPLE DATA ──
+// 20 realistic Indian trades spread across last 7 days
+function generateSampleTrades() {
+  const now = Date.now();
+  const day = 24 * 60 * 60 * 1000;
+  const instruments = [
+    { sym: 'RELIANCE', exchange: 'NSE', type: 'EQ' },
+    { sym: 'NIFTY 24000 CE', exchange: 'NFO', type: 'OPT' },
+    { sym: 'BANKNIFTY 51500 PE', exchange: 'NFO', type: 'OPT' },
+    { sym: 'HDFC', exchange: 'NSE', type: 'EQ' },
+    { sym: 'TCS', exchange: 'NSE', type: 'EQ' },
+    { sym: 'INFY', exchange: 'NSE', type: 'EQ' },
+    { sym: 'NIFTY 23900 PE', exchange: 'NFO', type: 'OPT' },
+    { sym: 'SBIN', exchange: 'NSE', type: 'EQ' },
+  ];
+  const trades = [];
+  const pnls = [820, -340, 1240, -180, 560, 980, -420, 1100, 440, -260,
+                720, 1380, -190, 650, 880, -310, 540, 1020, -150, 760];
+  let id = 1;
+  for (let d = 6; d >= 0; d--) {
+    const dayBase = now - d * day;
+    const count = d === 0 ? 4 : (d % 2 === 0 ? 3 : 2);
+    for (let t = 0; t < count; t++) {
+      const inst = instruments[(id - 1) % instruments.length];
+      const pnl  = pnls[(id - 1) % pnls.length];
+      const buyPrice = inst.type === 'OPT' ? (80 + Math.random() * 120) : (500 + Math.random() * 2000);
+      const qty      = inst.type === 'OPT' ? 50 : 10;
+      const sellPrice = buyPrice + pnl / qty;
+      trades.push({
+        id: 'sample_' + id,
+        symbol:    inst.sym,
+        exchange:  inst.exchange,
+        qty,
+        buyPrice:  parseFloat(buyPrice.toFixed(2)),
+        sellPrice: parseFloat(sellPrice.toFixed(2)),
+        pnl,
+        type:      'MIS',
+        source:    'zerodha',
+        emotion:   pnl > 0 ? 'disciplined' : (Math.random() > 0.5 ? 'fomo' : 'revenge'),
+        timestamp: dayBase - (t * 90 * 60 * 1000) + 9 * 60 * 60 * 1000,
+        isSample:  true,
+      });
+      id++;
+    }
+  }
+  return trades;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   loadData();
+
+  // When a real trade arrives while popup is open, exit sample mode
+  chrome.storage.onChanged.addListener((changes) => {
+    if (changes.trades && isSampleMode) {
+      const newTrades = changes.trades.newValue || [];
+      if (newTrades.length > 0) {
+        chrome.storage.local.set({ sampleDismissed: true });
+        loadData(); // reload with real data
+      }
+    }
+  });
+
   setupTabs();
   setupClearBtn();
   setupExportBtn();
@@ -47,16 +108,79 @@ function setupUpgradeBanner() {
 }
 
 function loadData() {
-  chrome.storage.local.get(['trades', 'stats'], (result) => {
-    allTrades = result.trades || [];
+  chrome.storage.local.get(['trades', 'stats', 'sampleDismissed'], (result) => {
+    const realTrades = result.trades || [];
     const stats = result.stats || {};
-    updateStatsStrip(stats);
+
+    if (realTrades.length === 0 && !result.sampleDismissed) {
+      // Show sample mode
+      isSampleMode = true;
+      allTrades = generateSampleTrades();
+      showSampleBanner();
+
+      // Build fake stats from sample trades
+      const sampleStats = buildSampleStats(allTrades);
+      updateStatsStrip(sampleStats);
+    } else {
+      isSampleMode = false;
+      allTrades = realTrades;
+      hideSampleBanner();
+      updateStatsStrip(stats);
+    }
+
     updateSourceDots();
     renderChart();
     renderTrades(currentFilter);
     if (currentFilter === 'summary') renderSummary();
     if (currentFilter === 'debrief') renderDebrief();
   });
+}
+
+function buildSampleStats(trades) {
+  const today = new Date().toDateString();
+  const todayTrades = trades.filter(t => new Date(t.timestamp).toDateString() === today);
+  const winners = trades.filter(t => t.pnl > 0);
+  const todayPnL = todayTrades.reduce((s, t) => s + t.pnl, 0);
+  const totalPnL = trades.reduce((s, t) => s + t.pnl, 0);
+  return {
+    todayPnL,
+    todayTrades: todayTrades.length,
+    winRate: trades.length ? Math.round((winners.length / trades.length) * 100) : 0,
+    totalPnL,
+  };
+}
+
+function showSampleBanner() {
+  let banner = document.getElementById('sample-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'sample-banner';
+    banner.innerHTML = `
+      <span>📊 Sample Data · Place a real trade to start</span>
+      <button id="sample-dismiss" title="Dismiss">✕</button>
+    `;
+    // Insert at top of popup body
+    const body = document.querySelector('.popup-body') || document.body;
+    body.insertBefore(banner, body.firstChild);
+
+    document.getElementById('sample-dismiss').addEventListener('click', () => {
+      chrome.storage.local.set({ sampleDismissed: true }, () => {
+        isSampleMode = false;
+        allTrades = [];
+        hideSampleBanner();
+        const stats = {};
+        updateStatsStrip(stats);
+        renderChart();
+        renderTrades(currentFilter);
+      });
+    });
+  }
+  banner.style.display = 'flex';
+}
+
+function hideSampleBanner() {
+  const banner = document.getElementById('sample-banner');
+  if (banner) banner.style.display = 'none';
 }
 
 // ── STATS STRIP ──
@@ -76,9 +200,13 @@ function updateStatsStrip(stats) {
   totalEl.className = 'val ' + (totalPnL > 0 ? 'green' : totalPnL < 0 ? 'red' : 'white');
 
   const footerEl = document.getElementById('footer-text');
-  footerEl.textContent = allTrades.length > 0
-    ? `${allTrades.length} trade${allTrades.length !== 1 ? 's' : ''} logged`
-    : 'Zero clicks needed';
+  if (isSampleMode) {
+    footerEl.textContent = '📊 Sample data — place a real trade to begin';
+  } else {
+    footerEl.textContent = allTrades.length > 0
+      ? `${allTrades.length} trade${allTrades.length !== 1 ? 's' : ''} logged`
+      : 'Zero clicks needed';
+  }
 }
 
 // ── 7-DAY CHART ──
@@ -170,8 +298,12 @@ function renderTrades(filter) {
       ? `<div class="trade-pnl ${trade.pnl >= 0 ? 'green' : 'red'}">${formatPnL(trade.pnl)}</div>`
       : `<div class="trade-pnl" style="color:#3D4255">—</div>`;
 
+    const sampleAttr = trade.isSample ? ' data-sample="1"' : '';
+    const emotionDisabled = trade.isSample ? ' disabled' : '';
+    const notesDisabled = trade.isSample ? ' disabled placeholder="Sample data"' : ' placeholder="Add note..."';
+
     return `
-      <div class="trade-item" data-id="${trade.id}">
+      <div class="trade-item${trade.isSample ? ' sample-trade' : ''}" data-id="${trade.id}"${sampleAttr}>
         <div class="action-badge ${isBuy ? 'action-buy' : 'action-sell'}">
           ${isBuy ? 'BUY' : 'SELL'}
         </div>
@@ -182,11 +314,11 @@ function renderTrades(filter) {
             <span class="product-tag ${productClass}">${productLabel}</span>
           </div>
           <div class="trade-detail">
-            <span>${trade.quantity} qty</span> @ <span>₹${formatPrice(trade.price)}</span>
-            · <span style="color:#3D4255">${trade.source || 'unknown'}</span>
+            <span>${trade.qty || trade.quantity} qty</span> @ <span>₹${formatPrice(trade.buyPrice || trade.price)}</span>
+            · <span style="color:#3D4255">${trade.source || 'zerodha'}</span>
           </div>
           <div class="trade-controls">
-            <select class="emotion-select" data-id="${trade.id}" title="Tag emotion">
+            <select class="emotion-select" data-id="${trade.id}" title="Tag emotion"${emotionDisabled}>
               <option value="">Tag emotion...</option>
               <option value="disciplined"   ${trade.emotion === 'disciplined'    ? 'selected' : ''}>✅ Disciplined</option>
               <option value="confident"     ${trade.emotion === 'confident'      ? 'selected' : ''}>💪 Confident</option>
@@ -195,12 +327,12 @@ function renderTrades(filter) {
               <option value="fearful"       ${trade.emotion === 'fearful'        ? 'selected' : ''}>😨 Fearful</option>
               <option value="overconfident" ${trade.emotion === 'overconfident'  ? 'selected' : ''}>🤑 Overconfident</option>
             </select>
-            <input class="notes-input" type="text" placeholder="Add note..." data-id="${trade.id}" value="${escHtml(trade.notes || '')}">
+            <input class="notes-input" type="text"${notesDisabled} data-id="${trade.id}" value="${escHtml(trade.notes || '')}">
           </div>
         </div>
         <div class="trade-right">
           ${pnlHtml}
-          <div class="trade-time">${trade.tradeTime || ''}</div>
+          <div class="trade-time">${trade.tradeTime || (trade.isSample ? new Date(trade.timestamp).toLocaleTimeString('en-IN', {hour:'2-digit', minute:'2-digit'}) : '')}</div>
         </div>
       </div>
     `;
