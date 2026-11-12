@@ -601,7 +601,7 @@ function escHtml(str) {
 // extension source, so a determined person could extract it, but that's true
 // of any client-side approach. The main protection is that keys expire.
 
-const LICENSE_SECRET = 'TL_SECRET_REPLACE_ME'; // must match server env var LICENSE_SECRET
+const LICENSE_SECRET = 'TL-PROD-ANKIT-2024-XJ9K7M'; // must match server env var LICENSE_SECRET
 
 async function hmac8(payload) {
   const enc  = new TextEncoder();
