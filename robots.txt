@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://abs-org07.github.io/tradelog-extension/sitemap.xml
