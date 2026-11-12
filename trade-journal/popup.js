@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupChecklist();
   setupLossLimit();
   setupUpgradeBanner();
+  setupLicenseKey();
 });
 
 function setupUpgradeBanner() {
@@ -591,4 +592,113 @@ function escHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+// ── LICENSE KEY ──────────────────────────────────────────────────────────────
+// Key format: TL-<BASE64URL(plan|expiry_ts)>-<HMAC_8_chars>
+// HMAC is verified client-side using the same secret embedded here.
+// This is "good enough" security for a ~₹999 product — the secret is in the
+// extension source, so a determined person could extract it, but that's true
+// of any client-side approach. The main protection is that keys expire.
+
+const LICENSE_SECRET = 'TL_SECRET_REPLACE_ME'; // must match server env var LICENSE_SECRET
+
+async function hmac8(payload) {
+  const enc  = new TextEncoder();
+  const key  = await crypto.subtle.importKey(
+    'raw', enc.encode(LICENSE_SECRET), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+  );
+  const sig  = await crypto.subtle.sign('HMAC', key, enc.encode(payload));
+  const hex  = Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2,'0')).join('');
+  return hex.slice(0, 8).toUpperCase();
+}
+
+async function validateLicenseKey(raw) {
+  const key = raw.trim().toUpperCase();
+  // Format: TL-<b64>-<8HEX>
+  const m = key.match(/^TL-([A-Z0-9_=-]+)-([0-9A-F]{8})$/i);
+  if (!m) return { valid: false, reason: 'Invalid format' };
+
+  const [, b64, mac] = m;
+  let payload;
+  try {
+    payload = atob(b64.replace(/-/g,'+').replace(/_/g,'/'));
+  } catch {
+    return { valid: false, reason: 'Corrupt key' };
+  }
+
+  const [plan, tsStr] = payload.split('|');
+  const expiry = parseInt(tsStr, 10);
+  if (!plan || !expiry || isNaN(expiry)) return { valid: false, reason: 'Corrupt key' };
+
+  const expectedMac = await hmac8(payload);
+  if (expectedMac !== mac.toUpperCase()) return { valid: false, reason: 'Invalid key' };
+
+  if (Date.now() > expiry) {
+    return { valid: false, reason: 'Key expired', expired: true, plan };
+  }
+
+  return { valid: true, plan, expiry };
+}
+
+function setupLicenseKey() {
+  const input    = document.getElementById('license-input');
+  const btn      = document.getElementById('license-activate-btn');
+  const status   = document.getElementById('license-status');
+  const proInfo  = document.getElementById('license-pro-info');
+
+  if (!input || !btn) return;
+
+  // Show current status on load
+  chrome.storage.local.get(['isPro', 'licenseKey', 'licenseExpiry', 'licensePlan'], (r) => {
+    if (r.isPro && r.licenseKey) {
+      showProActive(r.licensePlan, r.licenseExpiry, proInfo, status, input, btn);
+    }
+  });
+
+  btn.addEventListener('click', async () => {
+    const raw = input.value.trim();
+    if (!raw) { showStatus(status, 'Paste your license key above.', 'warn'); return; }
+
+    btn.textContent = 'Checking…'; btn.disabled = true;
+    const result = await validateLicenseKey(raw);
+    btn.textContent = 'Activate'; btn.disabled = false;
+
+    if (result.valid) {
+      chrome.storage.local.set({
+        isPro: true,
+        licenseKey: raw.trim().toUpperCase(),
+        licenseExpiry: result.expiry,
+        licensePlan: result.plan,
+      }, () => {
+        showProActive(result.plan, result.expiry, proInfo, status, input, btn);
+      });
+    } else if (result.expired) {
+      showStatus(status, `Key expired — please renew your ${result.plan} plan.`, 'error');
+    } else {
+      showStatus(status, result.reason || 'Invalid key. Check and try again.', 'error');
+    }
+  });
+}
+
+function showProActive(plan, expiry, proInfo, status, input, btn) {
+  if (input) input.style.display = 'none';
+  if (btn)   btn.style.display   = 'none';
+  if (status) status.style.display = 'none';
+  if (proInfo) {
+    proInfo.style.display = 'flex';
+    const planEl   = document.getElementById('license-plan-name');
+    const expiryEl = document.getElementById('license-expiry-date');
+    if (planEl)   planEl.textContent   = plan === 'lifetime' ? 'Pro Lifetime' : 'Pro Monthly';
+    if (expiryEl) expiryEl.textContent = plan === 'lifetime'
+      ? 'Never expires'
+      : 'Expires ' + new Date(expiry).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' });
+  }
+}
+
+function showStatus(el, msg, type) {
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = type === 'error' ? 'var(--loss)' : type === 'warn' ? 'var(--text3)' : 'var(--profit)';
+  el.style.display = 'block';
 }
