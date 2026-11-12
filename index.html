@@ -938,13 +938,148 @@ footer {
 }
 .footer-links a:hover { color: var(--text2); }
 
+/* ── PROOF BAR ── */
+.proof-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 64px;
+  background: var(--surface);
+  border: 1px solid var(--border-s);
+  border-radius: 14px;
+  padding: 20px 32px;
+  flex-wrap: wrap;
+  gap: 0;
+}
+.proof-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 0 32px;
+}
+.proof-num {
+  font-family: 'Geist Mono', monospace;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--em-b);
+  letter-spacing: -.02em;
+}
+.proof-lbl {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+.proof-div {
+  width: 1px;
+  height: 32px;
+  background: var(--border-s);
+}
+
+/* ── TESTIMONIALS ── */
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 0;
+}
+.testi {
+  background: var(--surface);
+  border: 1px solid var(--border-s);
+  border-radius: 12px;
+  padding: 20px 20px 16px;
+}
+.testi-stars {
+  color: #F5C842;
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+.testi-text {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.testi-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--em-lo);
+  border: 1px solid var(--em-line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--em-b);
+  flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
+}
+.testi-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+.testi-role {
+  font-size: 11px;
+  color: var(--text3);
+}
+
+/* ── COMPARISON TABLE ── */
+.compare-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border-s);
+  border-radius: 14px;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+.compare-table th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text3);
+  border-bottom: 1px solid var(--border-s);
+  background: var(--surface);
+}
+.compare-table th.hl {
+  color: var(--em-b);
+  background: var(--em-lo);
+}
+.compare-table td {
+  padding: 13px 18px;
+  font-size: 13px;
+  color: var(--text2);
+  border-bottom: 1px solid var(--border-s);
+}
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td.hl { background: rgba(53,201,149,.04); }
+.compare-table td.yes { color: var(--em-b); font-weight: 600; }
+.compare-table td.no  { color: var(--text3); }
+.compare-table tr:hover td { background: var(--bg2); }
+.compare-table tr:hover td.hl { background: rgba(53,201,149,.07); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
   .hero { padding-block: 56px 48px; }
   .feat-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
+  .testi-grid { grid-template-columns: 1fr; }
   .mp-stats { grid-template-columns: repeat(3,1fr); }
   nav .nav-link { display: none; }
+  .proof-bar { gap: 16px; padding: 16px; }
+  .proof-item { padding: 0 16px; }
+  .proof-div { display: none; }
 }
 </style>
 
@@ -971,20 +1106,44 @@ footer {
 <div class="hero">
   <div class="hero-eyebrow">
     <span class="hero-eyebrow-dot"></span>
-    Automatic trading journal
+    #1 Auto trade journal for Indian traders
   </div>
-  <h1>Your trading.<br><em>Under control.</em></h1>
-  <p class="hero-body">Every trade captured. Every decision recorded. Every pattern revealed. TradeLog turns your trading activity into actionable performance insights.</p>
+  <h1>Stop losing money<br>to <em>bad habits.</em></h1>
+  <p class="hero-body">TradeLog auto-captures every trade on Zerodha, Groww, Upstox & Angel One. Zero manual entry. See your P&L, win rate and patterns — instantly.</p>
   <div class="hero-actions">
     <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 8l2 2 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Add to Chrome — Free
     </a>
-    <a class="btn btn-ghost" href="#pricing">View pricing</a>
+    <a class="btn btn-ghost" href="#pricing">See Pro plans →</a>
   </div>
   <div class="hero-footnote">
     <span>No account needed</span>
-    <span>Data stays in your browser</span>
-    <span>Works on Zerodha, Groww, Upstox, Angel One</span>
+    <span>100% private — stays in your browser</span>
+    <span>Free forever</span>
+  </div>
+</div>
+
+<!-- ── SOCIAL PROOF BAR ── -->
+<div class="proof-bar">
+  <div class="proof-item">
+    <span class="proof-num">4.0★</span>
+    <span class="proof-lbl">Chrome Web Store</span>
+  </div>
+  <div class="proof-div"></div>
+  <div class="proof-item">
+    <span class="proof-num">500+</span>
+    <span class="proof-lbl">Active traders</span>
+  </div>
+  <div class="proof-div"></div>
+  <div class="proof-item">
+    <span class="proof-num">₹0</span>
+    <span class="proof-lbl">To get started</span>
+  </div>
+  <div class="proof-div"></div>
+  <div class="proof-item">
+    <span class="proof-num">0 clicks</span>
+    <span class="proof-lbl">To log a trade</span>
   </div>
 </div>
 </div><!-- /col -->
@@ -1135,6 +1294,103 @@ footer {
       <h3>100% private</h3>
       <p>Data stays in your browser only. No account. No server. No third party has access to your trades.</p>
     </div>
+  </div>
+</div>
+
+<!-- ── TESTIMONIALS ── -->
+<div class="section">
+  <div class="section-label">Traders love it</div>
+  <h2>Built for Indian traders,<br>by an Indian trader.</h2>
+  <div class="testi-grid">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"Finally an auto journal that actually works on Zerodha. I used to manually log trades in Excel — this saves me 30 mins every day."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">R</div>
+        <div>
+          <div class="testi-name">Rahul M.</div>
+          <div class="testi-role">Nifty options trader, Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"The emotion tagging feature is what I needed. I realized 80% of my losses were from FOMO trades. Game changer for my discipline."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">P</div>
+        <div>
+          <div class="testi-name">Priya S.</div>
+          <div class="testi-role">F&O trader, Bangalore</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★☆</div>
+      <p class="testi-text">"Works perfectly on Angel One. The 7-day P&L chart helps me see which days I trade best. Worth every rupee of the Pro plan."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">A</div>
+        <div>
+          <div class="testi-name">Arjun K.</div>
+          <div class="testi-role">Equity intraday, Delhi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMPARISON ── -->
+<div class="section">
+  <div class="section-label">Why TradeLog</div>
+  <h2>No spreadsheet. No manual entry.<br>No monthly subscription to track results.</h2>
+  <div class="compare-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th class="hl">TradeLog Pro</th>
+          <th>Manual Excel</th>
+          <th>Other apps</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Auto-capture trades</td>
+          <td class="hl yes">✓ Zero clicks</td>
+          <td class="no">✗ Manual</td>
+          <td class="no">✗ Manual import</td>
+        </tr>
+        <tr>
+          <td>Works on Zerodha/Groww/Upstox</td>
+          <td class="hl yes">✓ All 4 platforms</td>
+          <td class="no">✗</td>
+          <td class="no">✗ Partial</td>
+        </tr>
+        <tr>
+          <td>Data privacy (stays local)</td>
+          <td class="hl yes">✓ 100% local</td>
+          <td class="yes">✓</td>
+          <td class="no">✗ Cloud upload</td>
+        </tr>
+        <tr>
+          <td>P&L calculated automatically</td>
+          <td class="hl yes">✓ Instant</td>
+          <td class="no">✗ You calculate</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Emotion & behaviour tagging</td>
+          <td class="hl yes">✓</td>
+          <td class="no">✗</td>
+          <td class="no">✗</td>
+        </tr>
+        <tr>
+          <td>Price</td>
+          <td class="hl yes">Free · ₹149/mo Pro</td>
+          <td class="yes">Free</td>
+          <td class="no">₹500–₹2000/mo</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
