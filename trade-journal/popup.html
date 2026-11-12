@@ -8,19 +8,22 @@
   <style>
     /* ── DESIGN TOKENS ── */
     :root {
-      --bg:          #0B0D0F;
-      --bg2:         #111517;
-      --surface:     #15191A;
-      --surface-h:   #1C2221;
+      --bg:          #090B0D;
+      --bg2:         #0E1113;
+      --surface:     #141819;
+      --surface-h:   #1A1F20;
       --emerald:     #0D8B67;
       --emerald-b:   #35C995;
-      --text:        #E7EDE9;
-      --text2:       #929B9A;
-      --text3:       #606B68;
-      --border:      #252D2B;
-      --border-s:    #1E2524;
+      --em-lo:       rgba(53,201,149,.08);
+      --em-line:     rgba(53,201,149,.18);
+      --em-b:        #35C995;
+      --text:        #E8EEE9;
+      --text2:       #8E9896;
+      --text3:       #566260;
+      --border:      #1E2624;
+      --border-s:    #171D1B;
       --profit:      #35C995;
-      --loss:        #E47777;
+      --loss:        #E06060;
       --blue:        #5B8DEF;
     }
 
@@ -41,7 +44,7 @@
 
     /* ── HEADER ── */
     .header {
-      padding: 11px 16px;
+      padding: 10px 16px;
       border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
@@ -52,35 +55,36 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 8px;
       font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 14px;
-      letter-spacing: -.2px;
+      font-size: 13.5px;
+      letter-spacing: -.3px;
       color: var(--text);
     }
     .logo-mark {
-      width: 24px; height: 24px;
-      background: var(--emerald);
-      border-radius: 7px;
+      width: 22px; height: 22px;
+      background: linear-gradient(135deg, #0D8B67 0%, #0A6B50 100%);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(53,201,149,.2);
     }
     .logo-mark svg { display: block; }
 
-    .header-right { display: flex; align-items: center; gap: 8px; }
+    .header-right { display: flex; align-items: center; gap: 7px; }
 
     .market-status {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 600;
-      padding: 3px 9px;
+      padding: 3px 8px;
       border-radius: 100px;
-      letter-spacing: .05em;
+      letter-spacing: .06em;
       font-family: 'Inter', sans-serif;
     }
-    .market-open   { background: #0D3B2C; color: var(--emerald-b); border: 1px solid #1A5C43; }
+    .market-open   { background: rgba(53,201,149,.1); color: var(--emerald-b); border: 1px solid rgba(53,201,149,.2); }
     .market-closed { background: var(--surface); color: var(--text3); border: 1px solid var(--border); }
 
     .export-btn {
@@ -89,8 +93,8 @@
       gap: 5px;
       font-size: 11px;
       font-weight: 500;
-      padding: 4px 11px;
-      border-radius: 8px;
+      padding: 4px 10px;
+      border-radius: 7px;
       background: var(--surface);
       border: 1px solid var(--border);
       color: var(--text2);
@@ -98,37 +102,63 @@
       transition: all .15s;
       font-family: 'Inter', sans-serif;
     }
-    .export-btn svg { opacity: .6; transition: opacity .15s; }
-    .export-btn:hover { border-color: var(--emerald-b); color: var(--emerald-b); background: #0D3B2C; }
+    .export-btn svg { opacity: .5; transition: opacity .15s; }
+    .export-btn:hover { border-color: rgba(53,201,149,.3); color: var(--emerald-b); background: rgba(53,201,149,.06); }
     .export-btn:hover svg { opacity: 1; }
 
     /* ── P&L HERO ── */
     .pnl-hero {
-      padding: 16px 16px 12px;
+      padding: 14px 16px 13px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       background: var(--bg2);
+      position: relative;
+      overflow: hidden;
     }
+    .pnl-hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 120px; height: 120px;
+      background: radial-gradient(circle, rgba(53,201,149,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .pnl-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 11px;
+    }
+    .pnl-left {}
     .pnl-main-label {
-      font-size: 10px;
-      font-weight: 500;
+      font-size: 9.5px;
+      font-weight: 600;
       color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .08em;
-      margin-bottom: 4px;
+      letter-spacing: .1em;
+      margin-bottom: 3px;
     }
     .pnl-main-val {
       font-family: 'Geist Mono', monospace;
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 600;
       font-variant-numeric: tabular-nums;
-      letter-spacing: -.5px;
+      letter-spacing: -1px;
       line-height: 1;
-      margin-bottom: 12px;
       color: var(--text);
+      transition: color .2s;
     }
-    .pnl-main-val.profit { color: var(--profit); }
+    .pnl-main-val.profit { color: var(--profit); text-shadow: 0 0 24px rgba(53,201,149,.25); }
     .pnl-main-val.loss   { color: var(--loss); }
+
+    .pnl-change {
+      font-size: 11px;
+      font-family: 'Geist Mono', monospace;
+      color: var(--text3);
+      margin-top: 4px;
+    }
+    .pnl-change.up { color: var(--profit); }
+    .pnl-change.dn { color: var(--loss); }
 
     .pnl-row {
       display: grid;
@@ -140,12 +170,12 @@
     }
     .pnl-cell {
       background: var(--surface);
-      padding: 9px 12px;
+      padding: 8px 12px;
       text-align: left;
     }
     .pnl-cell .val {
       font-family: 'Geist Mono', monospace;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       font-variant-numeric: tabular-nums;
       display: block;
@@ -169,7 +199,7 @@
 
     /* ── CHART ── */
     .chart-section {
-      padding: 12px 16px 10px;
+      padding: 11px 16px 8px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       background: var(--bg);
@@ -178,27 +208,27 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .chart-label {
-      font-size: 10px;
-      font-weight: 500;
+      font-size: 9.5px;
+      font-weight: 600;
       color: var(--text3);
       text-transform: uppercase;
-      letter-spacing: .07em;
+      letter-spacing: .08em;
     }
     .chart-bars {
       display: flex;
       align-items: flex-end;
-      gap: 5px;
-      height: 56px;
+      gap: 4px;
+      height: 60px;
     }
     .chart-bar-wrap {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       height: 100%;
       justify-content: flex-end;
     }
@@ -206,31 +236,32 @@
       width: 100%;
       border-radius: 3px 3px 0 0;
       min-height: 2px;
-      transition: height .25s ease;
+      transition: height .3s ease;
     }
-    .chart-bar.profit { background: var(--profit); opacity: .85; }
-    .chart-bar.loss   { background: var(--loss); opacity: .75; }
-    .chart-bar.zero   { background: var(--border); height: 2px !important; }
+    .chart-bar.profit { background: linear-gradient(180deg, #35C995 0%, rgba(53,201,149,.5) 100%); }
+    .chart-bar.loss   { background: linear-gradient(180deg, #E06060 0%, rgba(224,96,96,.5) 100%); }
+    .chart-bar.zero   { background: var(--border); height: 2px !important; border-radius: 2px; }
     .chart-day {
-      font-size: 8px;
+      font-size: 8.5px;
       font-weight: 500;
       color: var(--text3);
       white-space: nowrap;
       font-family: 'Inter', sans-serif;
     }
+    .chart-day.today { color: var(--emerald-b); font-weight: 600; }
 
     /* ── TABS ── */
     .tabs {
       display: flex;
-      gap: 1px;
-      padding: 8px 12px;
+      gap: 2px;
+      padding: 7px 12px;
       border-bottom: 1px solid var(--border);
       flex-shrink: 0;
       background: var(--bg);
     }
     .tab {
-      padding: 5px 11px;
-      border-radius: 7px;
+      padding: 5px 10px;
+      border-radius: 6px;
       font-size: 11px;
       font-weight: 500;
       cursor: pointer;
@@ -551,50 +582,54 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding: 10px 16px;
-      background: #0C2520;
-      border-top: 1px solid #1A4035;
-      border-bottom: 1px solid #1A4035;
+      padding: 9px 14px;
+      background: rgba(53,201,149,.05);
+      border-top: 1px solid rgba(53,201,149,.12);
       flex-shrink: 0;
     }
     .upgrade-banner.hidden { display: none; }
     .upgrade-text {
-      font-size: 12px;
+      font-size: 11.5px;
       color: var(--text2);
       line-height: 1.4;
       font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .upgrade-text strong {
-      color: var(--text);
+      color: var(--emerald-b);
       font-weight: 600;
     }
     .upgrade-btn {
       background: var(--emerald-b);
       color: #060A08;
       border: none;
-      border-radius: 8px;
-      padding: 7px 14px;
+      border-radius: 7px;
+      padding: 6px 13px;
       font-family: 'Inter', sans-serif;
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11.5px;
+      font-weight: 700;
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
-      transition: background .15s;
+      transition: all .15s;
+      letter-spacing: -.1px;
     }
-    .upgrade-btn:hover { background: #2BBDAA; }
+    .upgrade-btn:hover { background: #41D9A5; box-shadow: 0 0 12px rgba(53,201,149,.3); }
     .upgrade-dismiss {
-      font-size: 18px;
+      font-size: 16px;
       color: var(--text3);
       background: none;
       border: none;
       cursor: pointer;
       line-height: 1;
-      padding: 0 0 0 2px;
+      padding: 0;
       flex-shrink: 0;
       transition: color .15s;
+      opacity: .6;
     }
-    .upgrade-dismiss:hover { color: var(--text2); }
+    .upgrade-dismiss:hover { color: var(--text2); opacity: 1; }
 
     /* ── FOOTER ── */
     .footer {
@@ -663,8 +698,13 @@
 
   <!-- P&L HERO -->
   <div class="pnl-hero">
-    <div class="pnl-main-label">Today's P&amp;L</div>
-    <div class="pnl-main-val" id="today-pnl">+₹0</div>
+    <div class="pnl-top">
+      <div class="pnl-left">
+        <div class="pnl-main-label">Today's P&amp;L</div>
+        <div class="pnl-main-val" id="today-pnl">+₹0</div>
+        <div class="pnl-change" id="pnl-change"></div>
+      </div>
+    </div>
     <div class="pnl-row">
       <div class="pnl-cell">
         <span class="val white" id="today-trades">0</span>
@@ -873,9 +913,13 @@
 
   <!-- UPGRADE BANNER -->
   <div class="upgrade-banner" id="upgrade-banner">
-    <div class="upgrade-text">
-      <strong>TradeLog Free</strong><br>
-      Unlock unlimited history &amp; analytics
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+      <div style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,rgba(53,201,149,.15),rgba(53,201,149,.05));border:1px solid rgba(53,201,149,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1l1.2 3.6H11L8.4 6.8l1 3.2L6 8l-3.4 2 1-3.2L1 4.6h3.8z" stroke="#35C995" stroke-width="1.2" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="upgrade-text">
+        <strong>Upgrade to Pro</strong> · Unlimited history &amp; CSV export
+      </div>
     </div>
     <button class="upgrade-btn" id="upgrade-btn">Get Pro →</button>
     <button class="upgrade-dismiss" id="upgrade-dismiss" title="Dismiss">×</button>
