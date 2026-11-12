@@ -548,6 +548,22 @@
       </div>
     </div>
 
+    <!-- loss limit setting -->
+    <div class="debrief-header" style="margin-top:4px">🛑 Daily Loss Limit</div>
+    <div class="debrief-card neutral" style="display:flex;align-items:center;gap:10px;padding:10px 12px;">
+      <span style="font-size:13px;color:#9BA3B8;white-space:nowrap;">₹</span>
+      <input type="number" id="loss-limit-input" placeholder="e.g. 5000"
+        style="flex:1;background:#0A0C10;border:1px solid #1E2230;border-radius:6px;
+               color:#E8EAF0;font-size:13px;padding:6px 10px;outline:none;min-width:0;"
+        min="0" step="100">
+      <button id="loss-limit-save"
+        style="background:#4F7EFF20;border:1px solid #4F7EFF50;color:#4F7EFF;
+               border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;">
+        Save
+      </button>
+    </div>
+    <div id="loss-limit-status" style="font-size:11px;color:#5C6480;margin-top:-4px;padding:0 2px;min-height:16px;"></div>
+
     <!-- pre-market checklist -->
     <div class="checklist-title">Pre-Market Checklist</div>
     <div class="checklist" id="checklist">

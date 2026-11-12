@@ -74,6 +74,9 @@ async function saveTrade(tradeData) {
     // Show notification
     showTradeNotification(newTrade);
 
+    // Check loss limit
+    checkLossLimitAfterTrade(trimmed);
+
     console.log('[TradeLog] Trade saved:', newTrade.action, newTrade.quantity, newTrade.symbol, '@₹', newTrade.price);
 
   } catch (err) {
@@ -209,3 +212,63 @@ function scheduleMidnightReset() {
 }
 
 scheduleMidnightReset();
+scheduleMarketCloseNotification();
+
+// ── DAILY P&L NOTIFICATION AT 3:35 PM ──
+
+function scheduleMarketCloseNotification() {
+  const now = new Date();
+  const target = new Date();
+  target.setHours(15, 35, 0, 0);
+  if (now >= target) target.setDate(target.getDate() + 1);
+  const delay = target - now;
+  setTimeout(async () => {
+    const day = new Date().getDay();
+    if (day >= 1 && day <= 5) {
+      const result = await chrome.storage.local.get(['trades', 'stats']);
+      const stats = result.stats || {};
+      const trades = result.trades || [];
+      const today = new Date().toDateString();
+      const todayTrades = trades.filter(t => new Date(t.timestamp).toDateString() === today);
+      const todayPnL = stats.todayPnL || 0;
+      const winRate = stats.winRate || 0;
+      const tradeCount = todayTrades.length;
+      if (tradeCount > 0) {
+        const pnlText = (todayPnL >= 0 ? '+₹' : '-₹') + Math.abs(todayPnL).toFixed(0);
+        chrome.notifications.create('daily-summary', {
+          type: 'basic',
+          iconUrl: 'icons/icon48.png',
+          title: `Market closed — Today: ${pnlText}`,
+          message: `${tradeCount} trade${tradeCount > 1 ? 's' : ''} · ${winRate}% win rate · Open TradeLog to review`,
+          priority: 2
+        });
+      }
+    }
+    scheduleMarketCloseNotification();
+  }, delay);
+}
+
+// ── LOSS LIMIT CHECK (called after each trade is saved) ──
+
+async function checkLossLimitAfterTrade(trades) {
+  try {
+    const result = await chrome.storage.local.get(['lossLimit', 'lossAlertDate']);
+    const limit = result.lossLimit;
+    if (!limit || limit <= 0) return;
+    const today = new Date().toDateString();
+    if (result.lossAlertDate === today) return;
+    const todayLoss = trades
+      .filter(t => new Date(t.timestamp).toDateString() === today && t.pnl !== null && t.pnl < 0)
+      .reduce((sum, t) => sum + t.pnl, 0);
+    if (Math.abs(todayLoss) >= limit) {
+      await chrome.storage.local.set({ lossAlertDate: today });
+      chrome.notifications.create('loss-limit', {
+        type: 'basic',
+        iconUrl: 'icons/icon48.png',
+        title: '🛑 Max Loss Reached — Stop Trading',
+        message: `You've lost ₹${Math.abs(todayLoss).toFixed(0)} today. Your limit is ₹${limit}. Step away now.`,
+        priority: 2
+      });
+    }
+  } catch(e) {}
+}

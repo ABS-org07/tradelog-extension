@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupExportBtn();
   updateMarketStatus();
   setupChecklist();
+  setupLossLimit();
 });
 
 function loadData() {
@@ -482,6 +483,45 @@ function setupChecklist() {
       });
     }
   } catch(e) {}
+}
+
+// ── LOSS LIMIT SETTING ──
+
+function setupLossLimit() {
+  const input = document.getElementById('loss-limit-input');
+  const saveBtn = document.getElementById('loss-limit-save');
+  const status = document.getElementById('loss-limit-status');
+  if (!input || !saveBtn) return;
+
+  // Load saved limit
+  chrome.storage.local.get(['lossLimit'], (result) => {
+    if (result.lossLimit && result.lossLimit > 0) {
+      input.value = result.lossLimit;
+      status.textContent = `Active: Stop trading if loss hits ₹${result.lossLimit.toLocaleString('en-IN')} today`;
+      status.style.color = '#FF5A5A';
+    }
+  });
+
+  saveBtn.addEventListener('click', () => {
+    const val = parseInt(input.value, 10);
+    if (!val || val <= 0) {
+      chrome.storage.local.remove('lossLimit', () => {
+        status.textContent = 'Loss limit cleared.';
+        status.style.color = '#5C6480';
+      });
+      return;
+    }
+    chrome.storage.local.set({ lossLimit: val, lossAlertDate: '' }, () => {
+      status.textContent = `✅ Set — alert fires if you lose ₹${val.toLocaleString('en-IN')} today`;
+      status.style.color = '#34C77B';
+      setTimeout(() => {
+        status.textContent = `Active: Stop trading if loss hits ₹${val.toLocaleString('en-IN')} today`;
+        status.style.color = '#FF5A5A';
+      }, 2500);
+    });
+  });
+
+  input.addEventListener('keydown', (e) => { if (e.key === 'Enter') saveBtn.click(); });
 }
 
 // ── CLEAR ──
