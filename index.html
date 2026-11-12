@@ -699,8 +699,38 @@ code {
 .pro-form-wrap .sub {
   font-size: 13px;
   color: var(--fg2);
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   line-height: 1.6;
+}
+
+.currency-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  background: var(--bg2);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.cur-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  color: var(--fg3);
+  transition: all 0.15s;
+}
+
+.cur-btn.active {
+  background: var(--bg3);
+  color: var(--fg);
+  border: 1px solid var(--rule2);
 }
 
 .form-plan-toggle {
@@ -1164,20 +1194,26 @@ footer {
     <!-- PRO FORM -->
     <div id="pro-form" class="pro-form-wrap">
       <h3>Get TradeLog Pro</h3>
-      <p class="sub">Fill in your details and pay instantly via UPI, card or net banking.</p>
+      <p class="sub">Choose your plan and currency — pay instantly.</p>
+
+      <!-- Currency toggle -->
+      <div class="currency-toggle" id="currency-toggle">
+        <button class="cur-btn active" data-cur="inr">₹ India (UPI)</button>
+        <button class="cur-btn" data-cur="usd">$ International (Card)</button>
+      </div>
 
       <div class="form-plan-toggle">
         <label class="plan-tog">
           <input type="radio" name="plan" value="monthly">
           <span class="plan-tog-label">
-            <span class="tog-price">₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span></span>
+            <span class="tog-price" id="price-monthly">₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span></span>
             <span class="tog-name">Monthly</span>
           </span>
         </label>
         <label class="plan-tog">
           <input type="radio" name="plan" value="lifetime" checked>
           <span class="plan-tog-label" style="border-color:var(--green);background:var(--green-lo);">
-            <span class="tog-price" style="color:var(--green)">₹999</span>
+            <span class="tog-price" id="price-lifetime" style="color:var(--green)">₹999</span>
             <span class="tog-name" style="color:var(--green);opacity:.7">Lifetime · Best deal</span>
           </span>
         </label>
@@ -1190,7 +1226,7 @@ footer {
         <div class="f-msg" id="pf-msg"></div>
       </div>
 
-      <p class="form-footnote">Instant payment via UPI / Card / Net Banking · 100% refund if not satisfied</p>
+      <p class="form-footnote" id="form-footnote">Instant payment via UPI / Card / Net Banking · 100% refund if not satisfied</p>
     </div>
   </div>
 </div>
@@ -1285,9 +1321,37 @@ footer {
 
   // Payment links
   const PAYMENT_LINKS = {
-    monthly:  'https://payments.cashfree.com/links?code=Uba9elfdujhg_AAAAAAAXTC4',
-    lifetime: 'https://payments.cashfree.com/links?code=Jba9eiroqmg0_AAAAAAAXTC4'
+    inr: {
+      monthly:  'https://payments.cashfree.com/links?code=Uba9elfdujhg_AAAAAAAXTC4',
+      lifetime: 'https://payments.cashfree.com/links?code=Jba9eiroqmg0_AAAAAAAXTC4'
+    },
+    usd: {
+      monthly:  'https://equivault.gumroad.com/l/TRADELOG-MONTHLY',
+      lifetime: 'https://equivault.gumroad.com/l/tradelog-lifetime'
+    }
   };
+
+  // Currency toggle
+  let activeCurrency = 'inr';
+  const PRICES = {
+    inr: { monthly: '₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span>', lifetime: '₹999' },
+    usd: { monthly: '$3<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span>', lifetime: '$15' }
+  };
+  const FOOTNOTES = {
+    inr: 'Instant payment via UPI / Card / Net Banking · 100% refund if not satisfied',
+    usd: 'Secure payment via Gumroad · Card / PayPal · 100% refund if not satisfied'
+  };
+
+  document.querySelectorAll('.cur-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCurrency = btn.dataset.cur;
+      document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('price-monthly').innerHTML = PRICES[activeCurrency].monthly;
+      document.getElementById('price-lifetime').innerHTML = PRICES[activeCurrency].lifetime;
+      document.getElementById('form-footnote').textContent = FOOTNOTES[activeCurrency];
+    });
+  });
 
   // Form submit
   document.getElementById('pf-submit').addEventListener('click', async () => {
@@ -1315,9 +1379,9 @@ footer {
         plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149'
       })
     }).catch(() => {});
-    // Redirect to Cashfree payment link
+    // Redirect to payment link based on currency + plan
     setTimeout(() => {
-      window.open(PAYMENT_LINKS[plan], '_blank');
+      window.open(PAYMENT_LINKS[activeCurrency][plan], '_blank');
       btn.textContent = 'Pay Now →'; btn.disabled = false;
       msg.style.color = 'var(--green)';
       msg.textContent = 'Payment page opened! Complete payment to activate Pro.';
