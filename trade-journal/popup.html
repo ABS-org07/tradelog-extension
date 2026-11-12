@@ -398,6 +398,55 @@
       opacity: .6;
     }
     .clear-btn:hover { opacity: 1; }
+
+    /* ── UPGRADE BANNER ── */
+    .upgrade-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 16px;
+      background: #0D2A1A;
+      border-top: 1px solid #34C77B20;
+      border-bottom: 1px solid #34C77B20;
+      flex-shrink: 0;
+    }
+    .upgrade-banner.hidden { display: none; }
+    .upgrade-text {
+      font-size: 12px;
+      color: #9BA3B8;
+      line-height: 1.4;
+    }
+    .upgrade-text strong {
+      color: #E8EAF0;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+    }
+    .upgrade-btn {
+      background: #34C77B;
+      color: #080A0E;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .upgrade-btn:hover { background: #2ECC78; }
+    .upgrade-dismiss {
+      font-size: 16px;
+      color: #3A3F52;
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0 0 0 4px;
+      flex-shrink: 0;
+    }
+    .upgrade-dismiss:hover { color: #9BA3B8; }
   </style>
 </head>
 <body>
@@ -599,6 +648,16 @@
         <label for="c5">Max 3 trades today</label>
       </div>
     </div>
+  </div>
+
+  <!-- UPGRADE BANNER (shown to free users) -->
+  <div class="upgrade-banner" id="upgrade-banner">
+    <div class="upgrade-text">
+      <strong>TradeLog Free</strong><br>
+      Unlock unlimited history &amp; analytics
+    </div>
+    <button class="upgrade-btn" id="upgrade-btn">Get Pro →</button>
+    <button class="upgrade-dismiss" id="upgrade-dismiss" title="Dismiss">×</button>
   </div>
 
   <!-- FOOTER -->

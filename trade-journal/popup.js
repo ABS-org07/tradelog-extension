@@ -11,7 +11,39 @@ document.addEventListener('DOMContentLoaded', () => {
   updateMarketStatus();
   setupChecklist();
   setupLossLimit();
+  setupUpgradeBanner();
 });
+
+function setupUpgradeBanner() {
+  const banner = document.getElementById('upgrade-banner');
+  const upgradeBtn = document.getElementById('upgrade-btn');
+  const dismissBtn = document.getElementById('upgrade-dismiss');
+
+  // Check if user is Pro or has dismissed the banner recently
+  chrome.storage.local.get(['isPro', 'bannerDismissedAt'], (result) => {
+    if (result.isPro) {
+      banner.classList.add('hidden');
+      return;
+    }
+    // Hide for 3 days after dismiss
+    if (result.bannerDismissedAt) {
+      const daysSince = (Date.now() - result.bannerDismissedAt) / (1000 * 60 * 60 * 24);
+      if (daysSince < 3) {
+        banner.classList.add('hidden');
+        return;
+      }
+    }
+  });
+
+  upgradeBtn.addEventListener('click', () => {
+    chrome.tabs.create({ url: 'https://abs-org07.github.io/tradelog-extension/#pricing' });
+  });
+
+  dismissBtn.addEventListener('click', () => {
+    banner.classList.add('hidden');
+    chrome.storage.local.set({ bannerDismissedAt: Date.now() });
+  });
+}
 
 function loadData() {
   chrome.storage.local.get(['trades', 'stats'], (result) => {
