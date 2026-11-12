@@ -1,4 +1,4 @@
-<title>TradeLog — Free Auto Trade Journal for Indian Traders | Zerodha, Groww, Upstox</title>
+<title>TradeLog — Automatic Trade Journal for Indian Traders</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="TradeLog automatically logs every trade you place on Zerodha, Groww, Upstox and Angel One. Zero manual entry. P&L calculated automatically. Free Chrome extension for Indian traders.">
 <meta name="keywords" content="trade journal india, zerodha trade journal, groww trade tracker, upstox journal, free trade journal, auto trade log, NSE BSE trade journal, Indian stock market journal, options trading journal india, F&O journal">
@@ -26,8 +26,7 @@
       "applicationCategory": "FinanceApplication",
       "operatingSystem": "Chrome",
       "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR" },
-      "featureList": ["Auto trade capture", "P&L calculation", "7-day chart", "CSV export", "Emotion tagging", "Debrief analysis", "Pre-market checklist", "Streak tracker"],
-      "keywords": "trade journal india, zerodha journal, groww trade tracker, upstox journal, free trade journal, NSE BSE trade journal, F&O journal, options trading journal india"
+      "featureList": ["Auto trade capture", "P&L calculation", "7-day chart", "CSV export", "Emotion tagging", "Debrief analysis", "Pre-market checklist", "Streak tracker"]
     },
     {
       "@type": "FAQPage",
@@ -37,65 +36,58 @@
         { "@type": "Question", "name": "Does TradeLog work with Zerodha Kite?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. TradeLog works seamlessly with Zerodha Kite. When you place a buy or sell order on kite.zerodha.com, TradeLog captures the trade automatically and logs it in your journal." } },
         { "@type": "Question", "name": "Where is my trade data stored?", "acceptedAnswer": { "@type": "Answer", "text": "Your trade data is stored 100% locally in your Chrome browser. It never leaves your device. No server, no cloud, no third party has access to your trades." } },
         { "@type": "Question", "name": "Can I export my trades to Excel?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. TradeLog has a one-click CSV export. All your trades — date, stock symbol, quantity, price, P&L and emotion tags — are exported to a file you can open in Excel or Google Sheets." } },
-        { "@type": "Question", "name": "Does TradeLog work for F&O options and futures trading?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. TradeLog captures all trade types — equities, F&O options and futures, intraday MIS and delivery CNC. Whether you trade Nifty options, Bank Nifty futures or stock F&O, TradeLog logs every order automatically." } },
-        { "@type": "Question", "name": "Which is the best free trade journal for Indian traders?", "acceptedAnswer": { "@type": "Answer", "text": "TradeLog is the only trade journal for Indian traders that works automatically — no manual entry required. It captures trades automatically the moment you place them on Zerodha, Groww, Upstox or Angel One." } }
+        { "@type": "Question", "name": "Does TradeLog work for F&O options and futures trading?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. TradeLog captures all trade types — equities, F&O options and futures, intraday MIS and delivery CNC. Whether you trade Nifty options, Bank Nifty futures or stock F&O, TradeLog logs every order automatically." } }
       ]
     }
   ]
 }
 </script>
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:ital,wght@0,400;0,500;1,400&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap">
 
 <style>
-/* ─────────────────────────────────────────────
-   TOKENS — dark-first, single-theme
-   Layout: editorial column, type-led, sparse
-───────────────────────────────────────────── */
+/* ── TOKENS ── */
 :root {
-  --bg:       #080A0E;
-  --bg2:      #0C0E14;
-  --bg3:      #111420;
-  --rule:     #1A1E2C;
-  --rule2:    #232840;
-  --fg:       #ECEEF5;
-  --fg2:      #8A93AB;
-  --fg3:      #464F6B;
-  --ink:      #C9CDD8;
-  --green:    #2ECC78;
-  --green-lo: #0D1F17;
-  --green-hi: #2ECC7822;
-  --red:      #E8504A;
-  --red-lo:   #200D0D;
-  --blue:     #4B82FF;
-  --blue-lo:  #0D1428;
-  --blue-hi:  #4B82FF22;
+  --bg:        #0B0D0F;
+  --bg2:       #111517;
+  --surface:   #15191A;
+  --surface-h: #1C2221;
+  --border:    #252D2B;
+  --border-s:  #1E2524;
+  --emerald:   #0D8B67;
+  --em-b:      #35C995;
+  --em-lo:     #0A2820;
+  --em-line:   #1A4035;
+  --text:      #E7EDE9;
+  --text2:     #929B9A;
+  --text3:     #606B68;
+  --profit:    #35C995;
+  --loss:      #E47777;
+  --blue:      #5B8DEF;
+  --blue-lo:   #0F1E38;
   color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html { scroll-behavior: smooth; }
+
 body {
   background: var(--bg);
-  color: var(--fg);
+  color: var(--text);
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.6;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
   -webkit-font-smoothing: antialiased;
+  padding-left:  max(16px, env(safe-area-inset-left,  0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Space Grotesk', sans-serif;
-  text-wrap: balance;
-}
+a { color: inherit; text-decoration: none; }
 
-a { color: inherit; }
-
-/* ── COLUMN ── */
 .col {
-  max-width: 860px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -105,368 +97,426 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding-block: 20px;
-  border-bottom: 1px solid var(--rule);
+  border-bottom: 1px solid var(--border-s);
 }
 
 .nav-logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: -.01em;
-  text-decoration: none;
-  color: var(--fg);
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -.2px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 10px;
 }
 
 .logo-mark {
   width: 28px; height: 28px;
-  border-radius: 7px;
-  background: var(--green);
+  border-radius: 8px;
+  background: var(--emerald);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
 }
 
-.logo-mark svg { display: block; }
-
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
 }
 
 .nav-link {
   font-size: 13px;
   font-weight: 500;
-  color: var(--fg2);
-  text-decoration: none;
+  color: var(--text3);
   transition: color .15s;
 }
-.nav-link:hover { color: var(--fg); }
+.nav-link:hover { color: var(--text); }
 
-.nav-pill {
-  font-size: 11px;
+.nav-cta {
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: .04em;
-  color: var(--green);
-  background: var(--green-lo);
-  border: 1px solid var(--green-hi);
+  letter-spacing: .01em;
+  color: var(--em-b);
+  background: var(--em-lo);
+  border: 1px solid var(--em-line);
   border-radius: 100px;
-  padding: 3px 10px;
+  padding: 5px 14px;
+  transition: background .15s;
 }
+.nav-cta:hover { background: #0D3B2C; }
 
 /* ── HERO ── */
 .hero {
-  padding-block: 80px 64px;
+  padding-block: 88px 72px;
 }
 
-.hero-kicker {
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: .1em;
+  letter-spacing: .09em;
   text-transform: uppercase;
-  color: var(--fg3);
-  margin-bottom: 20px;
+  color: var(--text3);
+  margin-bottom: 24px;
 }
 
-.hero h1 {
-  font-size: clamp(38px, 6.5vw, 68px);
-  font-weight: 700;
-  letter-spacing: -.035em;
-  line-height: 1.05;
-  margin-bottom: 22px;
-  color: var(--fg);
+.hero-eyebrow-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--em-b);
+  flex-shrink: 0;
 }
 
-.hero h1 mark {
-  background: none;
-  color: var(--green);
+h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  line-height: 1.04;
+  color: var(--text);
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+
+h1 em {
+  font-style: normal;
+  color: var(--em-b);
 }
 
 .hero-body {
   font-size: 17px;
-  color: var(--fg2);
-  line-height: 1.65;
-  max-width: 520px;
-  margin-bottom: 36px;
+  font-weight: 400;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 500px;
+  margin-bottom: 40px;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
+  margin-bottom: 16px;
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-family: 'Space Grotesk', sans-serif;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 14px;
-  padding: 11px 22px;
-  border-radius: 8px;
-  text-decoration: none;
+  padding: 12px 22px;
+  border-radius: 10px;
   transition: opacity .15s, background .15s;
   cursor: pointer;
   border: none;
 }
 
-.btn-green {
-  background: var(--green);
-  color: #060A08;
+.btn-primary {
+  background: var(--em-b);
+  color: #060D09;
 }
-.btn-green:hover { opacity: .88; }
+.btn-primary:hover { opacity: .88; }
 
 .btn-ghost {
-  background: transparent;
-  color: var(--fg2);
-  border: 1px solid var(--rule2);
+  background: var(--surface);
+  color: var(--text2);
+  border: 1px solid var(--border);
 }
-.btn-ghost:hover { color: var(--fg); border-color: var(--fg3); }
+.btn-ghost:hover { color: var(--text); border-color: var(--text3); }
 
 .hero-footnote {
-  margin-top: 14px;
   font-size: 12px;
-  color: var(--fg3);
+  color: var(--text3);
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-/* ── MOCK EXTENSION ── */
-.mock-wrap {
-  margin-block: 0 72px;
-  border: 1px solid var(--rule);
+.hero-footnote span::before {
+  content: '·';
+  margin-right: 14px;
+  opacity: .4;
+}
+.hero-footnote span:first-child::before { display: none; }
+
+/* ── EXTENSION MOCKUP ── */
+.mockup-wrap {
+  margin-bottom: 80px;
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg2);
+  box-shadow: 0 32px 64px rgba(0,0,0,.4);
 }
 
-.mock-chrome-bar {
+.chrome-bar {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 14px;
-  background: var(--bg3);
-  border-bottom: 1px solid var(--rule);
+  padding: 10px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
 }
 
-.chrome-dot { width: 9px; height: 9px; border-radius: 50%; }
-.chrome-dot-r { background: #FF5F57; }
-.chrome-dot-y { background: #FEBC2E; }
-.chrome-dot-g { background: #28C840; }
+.chrome-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.cd-r { background: #FF5F57; }
+.cd-y { background: #FEBC2E; }
+.cd-g { background: #28C840; }
 
-.chrome-bar-title {
+.chrome-url {
+  margin-left: 10px;
+  font-family: 'Geist Mono', monospace;
   font-size: 11px;
-  color: var(--fg3);
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 500;
-  margin-left: 8px;
+  color: var(--text3);
 }
 
-/* popup mock */
-.popup {
-  width: 100%;
-  max-width: 340px;
+/* popup inside mockup */
+.mock-popup {
+  max-width: 380px;
   margin: 0 auto;
-  padding: 0;
 }
 
-.popup-top {
+.mp-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--rule);
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-s);
 }
 
-.popup-logo {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+.mp-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   font-size: 13px;
-  display: flex; align-items: center; gap: 6px;
 }
 
-.popup-logo-mark {
-  width: 20px; height: 20px; border-radius: 5px;
-  background: var(--green);
+.mp-logo-mark {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: var(--emerald);
   display: flex; align-items: center; justify-content: center;
 }
 
-.popup-status {
+.mp-badge {
   font-size: 9px;
   font-weight: 700;
-  letter-spacing: .06em;
-  padding: 2px 7px;
+  letter-spacing: .07em;
+  padding: 2px 8px;
   border-radius: 100px;
-  background: var(--green-lo);
-  color: var(--green);
-  border: 1px solid var(--green-hi);
+  background: var(--em-lo);
+  color: var(--em-b);
+  border: 1px solid var(--em-line);
 }
 
-.popup-stats {
+.mp-pnl-hero {
+  padding: 14px 16px 12px;
+  border-bottom: 1px solid var(--border-s);
+  background: var(--bg2);
+}
+
+.mp-pnl-label {
+  font-size: 9px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text3);
+  margin-bottom: 3px;
+}
+
+.mp-pnl-val {
+  font-family: 'Geist Mono', monospace;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--profit);
+  letter-spacing: -.5px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.mp-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-bottom: 1px solid var(--rule);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-.pstat {
-  padding: 10px 10px 8px;
-  text-align: center;
-  border-right: 1px solid var(--rule);
+.mp-stat {
+  background: var(--surface);
+  padding: 8px 10px;
 }
-.pstat:last-child { border-right: none; }
 
-.pstat-val {
-  font-family: 'Space Grotesk', sans-serif;
+.mp-stat-val {
+  font-family: 'Geist Mono', monospace;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   display: block;
-  font-variant-numeric: tabular-nums;
+  color: var(--text);
 }
 
-.pstat-lbl {
-  font-size: 9px;
-  color: var(--fg3);
+.mp-stat-lbl {
+  font-size: 8px;
+  font-weight: 500;
+  color: var(--text3);
   text-transform: uppercase;
   letter-spacing: .06em;
+  margin-top: 2px;
   display: block;
-  margin-top: 1px;
 }
 
-.popup-chart {
-  padding: 10px 12px 4px;
-  border-bottom: 1px solid var(--rule);
+.mp-chart {
+  padding: 10px 16px 6px;
+  border-bottom: 1px solid var(--border-s);
 }
 
-.popup-chart-lbl {
+.mp-chart-lbl {
   font-size: 9px;
-  color: var(--fg3);
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: .06em;
-  margin-bottom: 6px;
+  letter-spacing: .07em;
+  color: var(--text3);
+  margin-bottom: 7px;
 }
 
-.bars {
+.mp-bars {
   display: flex;
   align-items: flex-end;
-  gap: 3px;
-  height: 36px;
+  gap: 4px;
+  height: 40px;
 }
 
-.bar { flex: 1; border-radius: 2px 2px 0 0; }
+.mp-bar { flex: 1; border-radius: 2px 2px 0 0; }
 
-.trade-row {
+.mp-trade {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 9px 12px;
-  border-bottom: 1px solid var(--bg);
+  gap: 10px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--border-s);
 }
 
-.trade-badge {
+.mp-action {
   width: 30px; height: 30px;
-  border-radius: 7px;
-  font-size: 9px;
-  font-weight: 800;
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .03em;
   flex-shrink: 0;
+  font-family: 'Inter', sans-serif;
 }
 
-.buy  { background: var(--green-lo); color: var(--green); }
-.sell { background: var(--red-lo); color: var(--red); }
+.mp-buy  { background: var(--em-lo); color: var(--em-b); border: 1px solid var(--em-line); }
+.mp-sell { background: #2E1515; color: var(--loss); border: 1px solid #4A2020; }
 
-.trade-info { flex: 1; min-width: 0; }
+.mp-trade-info { flex: 1; min-width: 0; }
 
-.trade-sym {
-  font-family: 'Space Grotesk', sans-serif;
+.mp-sym {
+  font-family: 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 700;
-  display: flex; align-items: center; gap: 4px;
-}
-
-.chip {
-  font-size: 8px;
-  padding: 1px 5px;
-  border-radius: 3px;
   font-weight: 600;
-  background: var(--bg3);
-  color: var(--fg3);
-  border: 1px solid var(--rule);
+  display: flex; align-items: center; gap: 5px;
+  color: var(--text);
 }
 
-.chip-blue { background: var(--blue-lo); color: var(--blue); border-color: var(--blue-hi); }
+.mp-chip {
+  font-size: 8px;
+  padding: 1px 4px;
+  border-radius: 3px;
+  font-weight: 500;
+  background: var(--surface);
+  color: var(--text3);
+  border: 1px solid var(--border);
+}
 
-.trade-detail { font-size: 9px; color: var(--fg3); margin-top: 1px; }
+.mp-detail {
+  font-family: 'Geist Mono', monospace;
+  font-size: 9px;
+  color: var(--text3);
+  margin-top: 2px;
+}
 
-.trade-pnl {
-  font-family: 'Space Grotesk', sans-serif;
+.mp-pnl {
+  font-family: 'Geist Mono', monospace;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
-/* ── SECTION ── */
+/* ── SECTIONS ── */
 .section {
-  border-top: 1px solid var(--rule);
-  padding-block: 64px;
+  border-top: 1px solid var(--border-s);
+  padding-block: 72px;
 }
 
 .section-label {
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: .1em;
+  letter-spacing: .09em;
   text-transform: uppercase;
-  color: var(--fg3);
+  color: var(--text3);
   margin-bottom: 10px;
 }
 
-.section h2 {
+h2 {
+  font-family: 'Inter', sans-serif;
   font-size: clamp(22px, 3.5vw, 32px);
-  font-weight: 700;
-  letter-spacing: -.025em;
-  color: var(--fg);
-  margin-bottom: 40px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  color: var(--text);
   line-height: 1.2;
+  margin-bottom: 44px;
+  text-wrap: balance;
 }
 
 /* ── FEATURES ── */
 .feat-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 12px;
+  background: var(--border-s);
+  border: 1px solid var(--border-s);
+  border-radius: 14px;
   overflow: hidden;
 }
 
 .feat {
   background: var(--bg);
-  padding: 24px 22px;
+  padding: 28px 24px;
+  transition: background .15s;
 }
 
-.feat-num {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  color: var(--fg3);
-  margin-bottom: 14px;
+.feat:hover { background: var(--surface); }
+
+.feat-icon {
+  width: 32px; height: 32px;
+  border-radius: 9px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 16px;
 }
 
 .feat h3 {
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
   letter-spacing: -.01em;
   margin-bottom: 7px;
-  color: var(--fg);
+  color: var(--text);
 }
 
 .feat p {
   font-size: 13px;
-  color: var(--fg2);
-  line-height: 1.65;
+  color: var(--text2);
+  line-height: 1.7;
 }
 
 /* ── PLATFORMS ── */
@@ -479,19 +529,21 @@ nav {
 .plat {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--rule2);
+  gap: 9px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
   font-size: 13px;
   font-weight: 500;
-  color: var(--fg2);
-  background: var(--bg2);
+  color: var(--text2);
+  background: var(--surface);
+  transition: border-color .15s;
 }
+.plat:hover { border-color: var(--text3); }
 
 .plat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 
-/* ── STEPS ── */
+/* ── HOW IT WORKS ── */
 .steps-list {
   display: flex;
   flex-direction: column;
@@ -499,146 +551,128 @@ nav {
 
 .step-item {
   display: grid;
-  grid-template-columns: 36px 1fr;
+  grid-template-columns: 40px 1fr;
   gap: 16px;
-  padding-block: 20px;
-  border-bottom: 1px solid var(--rule);
+  padding-block: 22px;
+  border-bottom: 1px solid var(--border-s);
 }
-
-.step-item:first-child { border-top: 1px solid var(--rule); }
+.step-item:first-child { border-top: 1px solid var(--border-s); }
 
 .step-n {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--fg3);
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text3);
   padding-top: 2px;
 }
 
 .step-body h3 {
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 3px;
-  color: var(--fg);
+  margin-bottom: 4px;
+  color: var(--text);
   letter-spacing: -.01em;
 }
 
-.step-body p { font-size: 13px; color: var(--fg2); }
-
-code {
-  font-family: 'SF Mono', 'Fira Code', monospace;
-  font-size: 11px;
-  background: var(--bg3);
-  border: 1px solid var(--rule2);
-  border-radius: 4px;
-  padding: 1px 5px;
-  color: var(--green);
-}
+.step-body p { font-size: 13px; color: var(--text2); line-height: 1.65; }
 
 /* ── PRICING ── */
 .pricing-band {
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-  padding-block: 72px;
-  background: var(--bg);
+  border-top: 1px solid var(--border-s);
+  border-bottom: 1px solid var(--border-s);
+  padding-block: 80px;
+  background: var(--bg2);
 }
 
 .pricing-head {
-  margin-bottom: 48px;
+  margin-bottom: 52px;
 }
 
 .pricing-head h2 {
-  font-size: clamp(24px, 4vw, 36px);
-  font-weight: 700;
-  letter-spacing: -.03em;
   margin-bottom: 10px;
-  line-height: 1.1;
 }
 
 .pricing-head p {
   font-size: 15px;
-  color: var(--fg2);
+  color: var(--text2);
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
+  background: var(--border-s);
+  border: 1px solid var(--border-s);
   border-radius: 14px;
   overflow: hidden;
-  margin-bottom: 48px;
+  margin-bottom: 52px;
 }
 
 .plan {
-  background: var(--bg2);
+  background: var(--bg);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
-  gap: 0;
   position: relative;
 }
 
-.plan-popular {
-  background: var(--bg3);
-}
+.plan-popular { background: var(--surface); }
 
 .plan-name {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .08em;
   text-transform: uppercase;
-  color: var(--fg3);
+  color: var(--text3);
   margin-bottom: 16px;
 }
 
 .plan-popular .plan-name { color: var(--blue); }
-.plan-lifetime .plan-name { color: var(--green); }
+.plan-lifetime .plan-name { color: var(--em-b); }
 
 .plan-price {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Geist Mono', monospace;
   font-size: 36px;
-  font-weight: 700;
-  letter-spacing: -.03em;
-  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -.04em;
+  color: var(--text);
   line-height: 1;
   margin-bottom: 4px;
 }
 
 .plan-price sub {
-  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
   font-weight: 500;
-  color: var(--fg3);
+  color: var(--text3);
   vertical-align: baseline;
   letter-spacing: 0;
 }
 
 .plan-desc {
   font-size: 12px;
-  color: var(--fg3);
+  color: var(--text3);
   margin-bottom: 24px;
 }
 
 .plan-cta {
   display: block;
   text-align: center;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 13px;
-  padding: 10px 16px;
-  border-radius: 7px;
-  text-decoration: none;
+  padding: 11px 16px;
+  border-radius: 10px;
   margin-bottom: 24px;
-  transition: opacity .15s;
-  border: 1px solid var(--rule2);
-  color: var(--fg2);
-  background: var(--bg);
+  transition: opacity .15s, background .15s;
+  border: 1px solid var(--border);
+  color: var(--text2);
+  background: var(--surface);
 }
-
-.plan-cta:hover { opacity: .8; }
+.plan-cta:hover { opacity: .82; }
 .plan-popular .plan-cta { background: var(--blue); color: #fff; border-color: var(--blue); }
-.plan-lifetime .plan-cta { background: var(--green); color: #060A08; border-color: var(--green); }
+.plan-lifetime .plan-cta { background: var(--em-b); color: #060D09; border-color: var(--em-b); }
 
 .plan-items {
   list-style: none;
@@ -649,37 +683,38 @@ code {
 
 .plan-item {
   display: flex;
-  gap: 9px;
+  gap: 10px;
   align-items: flex-start;
-  font-size: 12.5px;
-  color: var(--fg2);
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.4;
 }
 
-.plan-item-check { color: var(--green); flex-shrink: 0; margin-top: 1px; }
-.plan-item-x { color: var(--fg3); flex-shrink: 0; margin-top: 1px; }
-.plan-item.muted { color: var(--fg3); }
+.plan-item-check { color: var(--em-b); flex-shrink: 0; }
+.plan-item-x { color: var(--text3); flex-shrink: 0; }
+.plan-item.muted { color: var(--text3); }
 
 .plan-badge {
   position: absolute;
-  top: -1px;
-  right: 24px;
+  top: -1px; right: 24px;
   background: var(--blue);
   color: #fff;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .06em;
+  letter-spacing: .07em;
   padding: 4px 10px;
-  border-radius: 0 0 6px 6px;
+  border-radius: 0 0 7px 7px;
+  font-family: 'Inter', sans-serif;
 }
 
 .plan-scarcity {
   margin-top: 20px;
-  padding: 10px 12px;
-  background: var(--green-lo);
-  border: 1px solid var(--green-hi);
-  border-radius: 7px;
-  font-size: 11.5px;
-  color: var(--green);
+  padding: 10px 13px;
+  background: var(--em-lo);
+  border: 1px solid var(--em-line);
+  border-radius: 9px;
+  font-size: 12px;
+  color: var(--em-b);
   font-weight: 500;
   line-height: 1.5;
 }
@@ -690,47 +725,48 @@ code {
 }
 
 .pro-form-wrap h3 {
+  font-family: 'Inter', sans-serif;
   font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -.02em;
+  font-weight: 600;
+  letter-spacing: -.025em;
   margin-bottom: 6px;
+  color: var(--text);
 }
 
 .pro-form-wrap .sub {
   font-size: 13px;
-  color: var(--fg2);
-  margin-bottom: 16px;
+  color: var(--text2);
+  margin-bottom: 20px;
   line-height: 1.6;
 }
 
 .currency-toggle {
   display: flex;
-  gap: 6px;
+  gap: 4px;
   margin-bottom: 20px;
-  background: var(--bg2);
-  border: 1px solid var(--rule);
-  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 4px;
 }
 
 .cur-btn {
   flex: 1;
   padding: 8px 12px;
-  border: none;
-  border-radius: 6px;
-  font-family: 'Space Grotesk', sans-serif;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  font-family: 'Inter', sans-serif;
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
   background: transparent;
-  color: var(--fg3);
-  transition: all 0.15s;
+  color: var(--text3);
+  transition: all .15s;
 }
-
 .cur-btn.active {
-  background: var(--bg3);
-  color: var(--fg);
-  border: 1px solid var(--rule2);
+  background: var(--bg2);
+  color: var(--text);
+  border-color: var(--border);
 }
 
 .form-plan-toggle {
@@ -740,49 +776,42 @@ code {
   margin-bottom: 20px;
 }
 
-.plan-tog {
-  position: relative;
-  cursor: pointer;
-}
-
-.plan-tog input[type="radio"] {
-  position: absolute; opacity: 0; width: 0; height: 0;
-}
+.plan-tog { position: relative; cursor: pointer; }
+.plan-tog input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
 
 .plan-tog-label {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px 10px;
-  border-radius: 8px;
-  border: 1px solid var(--rule2);
-  background: var(--bg2);
+  padding: 14px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
   cursor: pointer;
   transition: border-color .15s, background .15s;
-  gap: 2px;
+  gap: 3px;
 }
-
 .plan-tog input:checked + .plan-tog-label {
-  border-color: var(--green);
-  background: var(--green-lo);
+  border-color: var(--em-b);
+  background: var(--em-lo);
 }
 
 .tog-price {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Geist Mono', monospace;
   font-size: 17px;
-  font-weight: 700;
-  color: var(--fg);
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -.02em;
 }
-
-.plan-tog input:checked + .plan-tog-label .tog-price { color: var(--green); }
+.plan-tog input:checked + .plan-tog-label .tog-price { color: var(--em-b); }
 
 .tog-name {
   font-size: 11px;
   font-weight: 500;
-  color: var(--fg3);
+  color: var(--text3);
+  font-family: 'Inter', sans-serif;
 }
-
-.plan-tog input:checked + .plan-tog-label .tog-name { color: var(--green); opacity: .7; }
+.plan-tog input:checked + .plan-tog-label .tog-name { color: var(--em-b); opacity: .7; }
 
 .form-fields {
   display: flex;
@@ -792,66 +821,62 @@ code {
 
 .f-input {
   width: 100%;
-  background: var(--bg2);
-  border: 1px solid var(--rule2);
-  border-radius: 7px;
-  padding: 11px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 15px;
   font-family: 'Inter', sans-serif;
   font-size: 14px;
-  color: var(--fg);
+  color: var(--text);
   outline: none;
   transition: border-color .15s;
 }
-
-.f-input::placeholder { color: var(--fg3); }
-.f-input:focus { border-color: var(--blue); }
+.f-input::placeholder { color: var(--text3); }
+.f-input:focus { border-color: var(--em-b); }
 
 .f-submit {
   width: 100%;
-  padding: 13px;
-  background: var(--green);
-  color: #060A08;
-  font-family: 'Space Grotesk', sans-serif;
+  padding: 14px;
+  background: var(--em-b);
+  color: #060D09;
+  font-family: 'Inter', sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   border: none;
-  border-radius: 7px;
+  border-radius: 10px;
   cursor: pointer;
   transition: opacity .15s;
   margin-top: 2px;
 }
-
 .f-submit:hover { opacity: .88; }
 
 .f-msg {
   font-size: 12px;
   text-align: center;
   min-height: 16px;
-  margin-top: 4px;
+  margin-top: 2px;
+  font-family: 'Inter', sans-serif;
 }
 
 .form-footnote {
-  font-size: 11px;
-  color: var(--fg3);
+  font-size: 12px;
+  color: var(--text3);
   margin-top: 14px;
   line-height: 1.7;
 }
 
 /* ── FAQ ── */
-.faq-list {
-  display: flex;
-  flex-direction: column;
-}
+.faq-list { display: flex; flex-direction: column; }
 
 details {
-  border-top: 1px solid var(--rule);
-  padding-block: 18px;
+  border-top: 1px solid var(--border-s);
+  padding-block: 20px;
 }
-
-details:last-child { border-bottom: 1px solid var(--rule); }
+details:last-child { border-bottom: 1px solid var(--border-s); }
 
 summary {
-  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
   list-style: none;
@@ -859,224 +884,263 @@ summary {
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  color: var(--fg);
+  color: var(--text);
 }
-
 summary::-webkit-details-marker { display: none; }
 
 .sum-icon {
-  color: var(--fg3);
-  font-size: 16px;
+  color: var(--text3);
+  font-size: 18px;
   flex-shrink: 0;
   transition: transform .2s;
   font-style: normal;
+  font-weight: 300;
 }
-
 details[open] .sum-icon { transform: rotate(45deg); }
-
 details p {
   margin-top: 12px;
   font-size: 13px;
-  color: var(--fg2);
+  color: var(--text2);
   line-height: 1.75;
 }
 
 /* ── FOOTER ── */
 footer {
-  border-top: 1px solid var(--rule);
-  padding-block: 28px;
+  border-top: 1px solid var(--border-s);
+  padding-block: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .footer-name {
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
   font-size: 14px;
-  color: var(--fg2);
+  color: var(--text2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .footer-links {
   display: flex;
-  gap: 16px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .footer-links a {
   font-size: 12px;
-  color: var(--fg3);
-  text-decoration: none;
+  color: var(--text3);
   transition: color .15s;
 }
-
-.footer-links a:hover { color: var(--fg2); }
+.footer-links a:hover { color: var(--text2); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-  .hero { padding-block: 48px 40px; }
-  .popup-stats { grid-template-columns: repeat(2, 1fr); }
-  .pstat:nth-child(2) { border-right: none; }
+  .hero { padding-block: 56px 48px; }
   .feat-grid { grid-template-columns: 1fr; }
   .pricing-grid { grid-template-columns: 1fr; }
-  .plan-badge { font-size: 9px; padding: 3px 8px; }
+  .mp-stats { grid-template-columns: repeat(3,1fr); }
+  nav .nav-link { display: none; }
 }
 </style>
 
-<!-- NAV -->
+<!-- ── NAV ── -->
 <div class="col">
 <nav>
   <a class="nav-logo" href="#">
     <div class="logo-mark">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M2 10L5.5 6L8.5 8.5L12 4" stroke="#060A08" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="1,11 4.5,7 7.5,9 11,4 13,5" stroke="#fff" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
     TradeLog
   </a>
   <div class="nav-right">
+    <a class="nav-link" href="#features">Features</a>
+    <a class="nav-link" href="#how-it-works">How it works</a>
     <a class="nav-link" href="#pricing">Pricing</a>
-    <span class="nav-pill">Free · No signup</span>
+    <a class="nav-cta" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">Add to Chrome</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ── -->
 <div class="hero">
-  <div class="hero-kicker">Built for Indian traders · 🇮🇳</div>
-  <h1>Your trades,<br>logged <mark>automatically</mark></h1>
-  <p class="hero-body">TradeLog silently captures every order you place on Zerodha, Groww, Upstox and Angel One. No forms. No screenshots. No copy-paste.</p>
+  <div class="hero-eyebrow">
+    <span class="hero-eyebrow-dot"></span>
+    Automatic trading journal
+  </div>
+  <h1>Your trading.<br><em>Under control.</em></h1>
+  <p class="hero-body">Every trade captured. Every decision recorded. Every pattern revealed. TradeLog turns your trading activity into actionable performance insights.</p>
   <div class="hero-actions">
-    <a class="btn btn-green" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">
+    <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">
       Add to Chrome — Free
     </a>
     <a class="btn btn-ghost" href="#pricing">View pricing</a>
   </div>
-  <p class="hero-footnote">Chrome extension · data stays in your browser · no account needed</p>
+  <div class="hero-footnote">
+    <span>No account needed</span>
+    <span>Data stays in your browser</span>
+    <span>Works on Zerodha, Groww, Upstox, Angel One</span>
+  </div>
 </div>
 </div><!-- /col -->
 
-<!-- MOCK EXTENSION -->
+<!-- ── EXTENSION MOCKUP ── -->
 <div class="col">
-<div class="mock-wrap">
-  <div class="mock-chrome-bar">
-    <div class="chrome-dot chrome-dot-r"></div>
-    <div class="chrome-dot chrome-dot-y"></div>
-    <div class="chrome-dot chrome-dot-g"></div>
-    <span class="chrome-bar-title">TradeLog — Auto Trade Journal</span>
+<div class="mockup-wrap">
+  <div class="chrome-bar">
+    <div class="chrome-dot cd-r"></div>
+    <div class="chrome-dot cd-y"></div>
+    <div class="chrome-dot cd-g"></div>
+    <span class="chrome-url">TradeLog — Auto Trade Journal</span>
   </div>
-  <div class="popup">
-    <div class="popup-top">
-      <div class="popup-logo">
-        <div class="popup-logo-mark">
+  <div class="mock-popup">
+    <div class="mp-header">
+      <div class="mp-logo">
+        <div class="mp-logo-mark">
           <svg width="11" height="11" viewBox="0 0 14 14" fill="none">
-            <path d="M2 10L5.5 6L8.5 8.5L12 4" stroke="#060A08" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="1,11 4.5,7 7.5,9 11,4 13,5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
         TradeLog
       </div>
-      <span class="popup-status">LIVE</span>
+      <span class="mp-badge">MARKET OPEN</span>
     </div>
-    <div class="popup-stats">
-      <div class="pstat">
-        <span class="pstat-val" style="color:var(--green)">+₹4,820</span>
-        <span class="pstat-lbl">Today P&L</span>
-      </div>
-      <div class="pstat">
-        <span class="pstat-val">8</span>
-        <span class="pstat-lbl">Trades</span>
-      </div>
-      <div class="pstat">
-        <span class="pstat-val" style="color:var(--blue)">75%</span>
-        <span class="pstat-lbl">Win Rate</span>
-      </div>
-      <div class="pstat">
-        <span class="pstat-val" style="color:var(--green)">+₹28,350</span>
-        <span class="pstat-lbl">All Time</span>
-      </div>
-    </div>
-    <div class="popup-chart">
-      <div class="popup-chart-lbl">7-Day P&L</div>
-      <div class="bars">
-        <div class="bar" style="height:38%;background:var(--green);opacity:.5"></div>
-        <div class="bar" style="height:60%;background:var(--red);opacity:.5"></div>
-        <div class="bar" style="height:28%;background:var(--green);opacity:.5"></div>
-        <div class="bar" style="height:82%;background:var(--green);opacity:.6"></div>
-        <div class="bar" style="height:18%;background:var(--red);opacity:.5"></div>
-        <div class="bar" style="height:52%;background:var(--green);opacity:.6"></div>
-        <div class="bar" style="height:100%;background:var(--green)"></div>
+
+    <div class="mp-pnl-hero">
+      <div class="mp-pnl-label">Today's P&amp;L</div>
+      <div class="mp-pnl-val">+₹4,820</div>
+      <div class="mp-stats">
+        <div class="mp-stat">
+          <span class="mp-stat-val">8</span>
+          <span class="mp-stat-lbl">Trades</span>
+        </div>
+        <div class="mp-stat">
+          <span class="mp-stat-val" style="color:var(--blue)">75%</span>
+          <span class="mp-stat-lbl">Win Rate</span>
+        </div>
+        <div class="mp-stat">
+          <span class="mp-stat-val" style="color:var(--profit)">+₹28,350</span>
+          <span class="mp-stat-lbl">All Time</span>
+        </div>
       </div>
     </div>
-    <div class="trade-row">
-      <div class="trade-badge buy">BUY</div>
-      <div class="trade-info">
-        <div class="trade-sym">RELIANCE <span class="chip">NSE</span><span class="chip">MIS</span></div>
-        <div class="trade-detail">10 qty @ ₹2,450 · zerodha</div>
+
+    <div class="mp-chart">
+      <div class="mp-chart-lbl">7-Day Performance</div>
+      <div class="mp-bars">
+        <div class="mp-bar" style="height:38%;background:var(--profit);opacity:.6;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:55%;background:var(--loss);opacity:.55;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:28%;background:var(--profit);opacity:.5;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:76%;background:var(--profit);opacity:.65;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:18%;background:var(--loss);opacity:.5;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:48%;background:var(--profit);opacity:.6;border-radius:2px 2px 0 0"></div>
+        <div class="mp-bar" style="height:100%;background:var(--profit);border-radius:2px 2px 0 0"></div>
       </div>
-      <div class="trade-pnl" style="color:var(--fg3)">—</div>
     </div>
-    <div class="trade-row">
-      <div class="trade-badge sell">SELL</div>
-      <div class="trade-info">
-        <div class="trade-sym">RELIANCE <span class="chip">NSE</span><span class="chip">MIS</span></div>
-        <div class="trade-detail">10 qty @ ₹2,532 · zerodha</div>
+
+    <div class="mp-trade">
+      <div class="mp-action mp-buy">BUY</div>
+      <div class="mp-trade-info">
+        <div class="mp-sym">RELIANCE <span class="mp-chip">NSE</span><span class="mp-chip">MIS</span></div>
+        <div class="mp-detail">10 qty · ₹2,450.00 · zerodha</div>
       </div>
-      <div class="trade-pnl" style="color:var(--green)">+₹820</div>
+      <div class="mp-pnl" style="color:var(--text3)">—</div>
     </div>
-    <div class="trade-row">
-      <div class="trade-badge buy">BUY</div>
-      <div class="trade-info">
-        <div class="trade-sym">INFY <span class="chip">NSE</span><span class="chip chip-blue">CNC</span></div>
-        <div class="trade-detail">5 qty @ ₹1,890 · groww</div>
+    <div class="mp-trade">
+      <div class="mp-action mp-sell">SELL</div>
+      <div class="mp-trade-info">
+        <div class="mp-sym">RELIANCE <span class="mp-chip">NSE</span><span class="mp-chip">MIS</span></div>
+        <div class="mp-detail">10 qty · ₹2,532.00 · zerodha</div>
       </div>
-      <div class="trade-pnl" style="color:var(--fg3)">—</div>
+      <div class="mp-pnl" style="color:var(--profit)">+₹820</div>
+    </div>
+    <div class="mp-trade" style="border-bottom:none">
+      <div class="mp-action mp-buy">BUY</div>
+      <div class="mp-trade-info">
+        <div class="mp-sym">NIFTY 24000 CE <span class="mp-chip">NFO</span><span class="mp-chip">MIS</span></div>
+        <div class="mp-detail">50 qty · ₹142.50 · zerodha</div>
+      </div>
+      <div class="mp-pnl" style="color:var(--text3)">—</div>
     </div>
   </div>
 </div>
 </div><!-- /col -->
 
-<!-- FEATURES -->
+<!-- ── FEATURES ── -->
 <div class="col">
-<div class="section">
-  <div class="section-label">What it does</div>
+<div class="section" id="features">
+  <div class="section-label">Capabilities</div>
   <h2>Everything a trade journal should do.<br>Nothing you have to do yourself.</h2>
   <div class="feat-grid">
     <div class="feat">
-      <div class="feat-num">01</div>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="3" stroke="var(--em-b)" stroke-width="1.5"/>
+          <path d="M8 1v2M8 13v2M1 8h2M13 8h2" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
       <h3>Zero-click capture</h3>
       <p>Place a trade. It appears in your journal instantly. No copy-pasting, no screenshots, no forms to fill.</p>
     </div>
     <div class="feat">
-      <div class="feat-num">02</div>
-      <h3>Auto P&L calculation</h3>
-      <p>Your SELL is matched to your BUY automatically. P&L shown the moment you close a position.</p>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <polyline points="1,12 5,7 8,9 12,4 15,5" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3>Auto P&amp;L calculation</h3>
+      <p>Your SELL is matched to your BUY automatically. P&amp;L shown the moment you close a position.</p>
     </div>
     <div class="feat">
-      <div class="feat-num">03</div>
-      <h3>7-day performance chart</h3>
-      <p>Green bars for profit days. Red bars for loss days. See your week at a glance without opening Excel.</p>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="1" y="1" width="14" height="14" rx="3" stroke="var(--em-b)" stroke-width="1.5"/>
+          <path d="M4 8h8M4 5h5M4 11h3" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h3>Performance analytics</h3>
+      <p>7-day P&amp;L chart. Win rate. Best and worst trades. All computed automatically from your real orders.</p>
     </div>
     <div class="feat">
-      <div class="feat-num">04</div>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2C4.69 2 2 4.69 2 8s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z" stroke="var(--em-b)" stroke-width="1.5"/>
+          <path d="M8 5v3l2 2" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
       <h3>Emotion tagging</h3>
-      <p>Tag each trade: Disciplined, FOMO, Revenge, Fearful. Spot the patterns destroying your P&L.</p>
+      <p>Tag each trade: Disciplined, FOMO, Revenge, Fearful. Spot the behavioural patterns destroying your P&amp;L.</p>
     </div>
     <div class="feat">
-      <div class="feat-num">05</div>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" stroke="var(--em-b)" stroke-width="1.5"/>
+          <path d="M8 10V6M6 8h4" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </div>
       <h3>Export to Excel</h3>
-      <p>One click downloads all your trades as a CSV — date, symbol, qty, price, P&L, emotions, notes.</p>
+      <p>One click downloads all your trades as a CSV — date, symbol, qty, price, P&amp;L, emotions, notes.</p>
     </div>
     <div class="feat">
-      <div class="feat-num">06</div>
+      <div class="feat-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 1l1.9 3.8 4.2.6-3 2.9.7 4.2L8 10.4l-3.8 2 .7-4.2-3-2.9 4.2-.6L8 1z" stroke="var(--em-b)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
       <h3>100% private</h3>
-      <p>Data stays in your browser only. No account. No server. No one else can see your trades.</p>
+      <p>Data stays in your browser only. No account. No server. No third party has access to your trades.</p>
     </div>
   </div>
 </div>
 
-<!-- PLATFORMS -->
+<!-- ── PLATFORMS ── -->
 <div class="section">
-  <div class="section-label">Supported platforms</div>
+  <div class="section-label">Integrations</div>
   <h2>Works on the platforms you already trade on.</h2>
   <div class="plat-row">
     <div class="plat"><div class="plat-dot" style="background:#387ED1"></div>Zerodha Kite</div>
@@ -1086,53 +1150,53 @@ footer {
   </div>
 </div>
 
-<!-- INSTALL -->
-<div class="section">
+<!-- ── HOW IT WORKS ── -->
+<div class="section" id="how-it-works">
   <div class="section-label">Get started</div>
-  <h2>Install in 2 minutes.</h2>
+  <h2>Up and running in under 2 minutes.</h2>
   <div class="steps-list">
     <div class="step-item">
       <div class="step-n">01</div>
       <div class="step-body">
-        <h3>Visit the Chrome Web Store</h3>
-        <p>Click the button below to open TradeLog. It's completely free — no account, no card.</p>
+        <h3>Install from the Chrome Web Store</h3>
+        <p>Click the button below — it's free, no account required, no card needed.</p>
       </div>
     </div>
     <div class="step-item">
       <div class="step-n">02</div>
       <div class="step-body">
-        <h3>Click "Add to Chrome"</h3>
-        <p>You'll be taken to the Chrome Web Store. Click <strong>Add to Chrome</strong> → <strong>Add extension</strong>.</p>
+        <h3>Pin TradeLog to your toolbar</h3>
+        <p>Click the puzzle icon in Chrome → find TradeLog → click the pin to keep it always visible.</p>
       </div>
     </div>
     <div class="step-item">
       <div class="step-n">03</div>
       <div class="step-body">
-        <h3>Pin it to your toolbar</h3>
-        <p>Click the puzzle icon in Chrome → find TradeLog → click the pin icon to keep it visible.</p>
+        <h3>Trade normally on your broker</h3>
+        <p>Open Zerodha, Groww, Upstox or Angel One and place a trade. TradeLog captures it automatically — zero interaction needed.</p>
       </div>
     </div>
     <div class="step-item">
       <div class="step-n">04</div>
       <div class="step-body">
-        <h3>Start trading</h3>
-        <p>Open Zerodha, Groww, Upstox or Angel One and place a trade. It appears in TradeLog automatically.</p>
+        <h3>Review your performance</h3>
+        <p>Open TradeLog at any time to see your P&amp;L, win rate, 7-day chart and behavioural insights from your trading session.</p>
       </div>
     </div>
   </div>
-  <div style="margin-top:28px">
-    <a class="btn btn-green" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">Add to Chrome — Free</a>
+  <div style="margin-top:32px">
+    <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">Add to Chrome — Free</a>
   </div>
 </div>
 </div><!-- /col -->
 
-<!-- PRICING -->
+<!-- ── PRICING ── -->
 <div id="pricing" class="pricing-band">
   <div class="col">
     <div class="pricing-head">
       <div class="section-label">Pricing</div>
       <h2>Start free.<br>Upgrade when you're ready.</h2>
-      <p>No credit card to start. No hidden fees.</p>
+      <p>No credit card to start. No hidden fees. Cancel monthly anytime.</p>
     </div>
 
     <div class="pricing-grid">
@@ -1140,7 +1204,7 @@ footer {
       <div class="plan">
         <div class="plan-name">Free</div>
         <div class="plan-price">₹0</div>
-        <div class="plan-desc">Forever free, no card needed</div>
+        <div class="plan-desc">Forever free — no card needed</div>
         <a class="plan-cta" href="https://chromewebstore.google.com/detail/tradelog-auto-trade-journal/cooikdfmofnjeojkjolgcmnilobmlihc" target="_blank">Install Free →</a>
         <ul class="plan-items">
           <li class="plan-item"><span class="plan-item-check">✓</span>50 trades per month</li>
@@ -1149,8 +1213,8 @@ footer {
           <li class="plan-item"><span class="plan-item-check">✓</span>Emotion tagging + trade notes</li>
           <li class="plan-item"><span class="plan-item-check">✓</span>Pre-market checklist</li>
           <li class="plan-item muted"><span class="plan-item-x">✗</span>CSV export</li>
-          <li class="plan-item muted"><span class="plan-item-x">✗</span>3:35 PM daily notification</li>
-          <li class="plan-item muted"><span class="plan-item-x">✗</span>Loss limit alert</li>
+          <li class="plan-item muted"><span class="plan-item-x">✗</span>Daily P&amp;L notification</li>
+          <li class="plan-item muted"><span class="plan-item-x">✗</span>Loss limit alerts</li>
           <li class="plan-item muted"><span class="plan-item-x">✗</span>Upstox &amp; Angel One</li>
         </ul>
       </div>
@@ -1166,11 +1230,11 @@ footer {
           <li class="plan-item"><span class="plan-item-check">✓</span><strong>Unlimited trades</strong></li>
           <li class="plan-item"><span class="plan-item-check">✓</span>All 4 platforms</li>
           <li class="plan-item"><span class="plan-item-check">✓</span>Everything in Free</li>
-          <li class="plan-item"><span class="plan-item-check">✓</span>3:35 PM daily P&amp;L notification</li>
-          <li class="plan-item"><span class="plan-item-check">✓</span>Loss limit alert</li>
+          <li class="plan-item"><span class="plan-item-check">✓</span>Daily 3:35 PM P&amp;L notification</li>
+          <li class="plan-item"><span class="plan-item-check">✓</span>Loss limit alerts</li>
           <li class="plan-item"><span class="plan-item-check">✓</span>Month &amp; all-time P&amp;L summary</li>
           <li class="plan-item"><span class="plan-item-check">✓</span>CSV export to Excel</li>
-          <li class="plan-item"><span class="plan-item-check">✓</span>Debrief — why did I lose today?</li>
+          <li class="plan-item"><span class="plan-item-check">✓</span>Debrief — session analysis</li>
           <li class="plan-item"><span class="plan-item-check">✓</span>Priority support</li>
         </ul>
       </div>
@@ -1187,16 +1251,15 @@ footer {
           <li class="plan-item"><span class="plan-item-check">✓</span>Saves ₹1,788/year vs monthly</li>
           <li class="plan-item"><span class="plan-item-check">✓</span><strong>Only 100 lifetime slots</strong></li>
         </ul>
-        <div class="plan-scarcity">Early supporter price — goes up after 100 users</div>
+        <div class="plan-scarcity">Early supporter price — increases after 100 users</div>
       </div>
     </div>
 
     <!-- PRO FORM -->
     <div id="pro-form" class="pro-form-wrap">
       <h3>Get TradeLog Pro</h3>
-      <p class="sub">Choose your plan and currency — pay instantly.</p>
+      <p class="sub">Choose your plan and currency. Payment is instant.</p>
 
-      <!-- Currency toggle -->
       <div class="currency-toggle" id="currency-toggle">
         <button class="cur-btn active" data-cur="inr">₹ India (UPI)</button>
         <button class="cur-btn" data-cur="usd">$ International (Card)</button>
@@ -1206,15 +1269,15 @@ footer {
         <label class="plan-tog">
           <input type="radio" name="plan" value="monthly">
           <span class="plan-tog-label">
-            <span class="tog-price" id="price-monthly">₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span></span>
+            <span class="tog-price" id="price-monthly">₹149<span style="font-size:11px;font-weight:500;color:var(--text3)">/mo</span></span>
             <span class="tog-name">Monthly</span>
           </span>
         </label>
         <label class="plan-tog">
           <input type="radio" name="plan" value="lifetime" checked>
-          <span class="plan-tog-label" style="border-color:var(--green);background:var(--green-lo);">
-            <span class="tog-price" id="price-lifetime" style="color:var(--green)">₹999</span>
-            <span class="tog-name" style="color:var(--green);opacity:.7">Lifetime · Best deal</span>
+          <span class="plan-tog-label" style="border-color:var(--em-b);background:var(--em-lo);">
+            <span class="tog-price" id="price-lifetime" style="color:var(--em-b)">₹999</span>
+            <span class="tog-name" style="color:var(--em-b);opacity:.7">Lifetime · Best deal</span>
           </span>
         </label>
       </div>
@@ -1231,19 +1294,19 @@ footer {
   </div>
 </div>
 
-<!-- FAQ -->
+<!-- ── FAQ ── -->
 <div class="col">
 <div class="section" id="faq">
   <div class="section-label">FAQ</div>
   <h2>Frequently asked questions</h2>
-  <div class="faq-list" style="margin-top:8px">
+  <div class="faq-list" style="margin-top:0">
     <details open>
       <summary>What is TradeLog? <i class="sum-icon">+</i></summary>
       <p>TradeLog is a free Chrome extension that automatically logs every trade you place on Indian trading platforms like Zerodha, Groww, Upstox and Angel One. It captures the stock name, quantity, price, buy/sell direction and calculates P&L automatically — no manual entry needed.</p>
     </details>
     <details>
       <summary>Is TradeLog free? <i class="sum-icon">+</i></summary>
-      <p>Yes, TradeLog is completely free. No signup required, no credit card, no subscription. Download it from the Chrome Web Store and start using it immediately.</p>
+      <p>Yes, TradeLog has a free plan with no signup and no credit card. You can install it from the Chrome Web Store and start using it immediately. A Pro plan is available for unlimited trades and advanced features.</p>
     </details>
     <details>
       <summary>Does TradeLog work with Zerodha Kite? <i class="sum-icon">+</i></summary>
@@ -1255,27 +1318,32 @@ footer {
     </details>
     <details>
       <summary>Can I export my trades to Excel? <i class="sum-icon">+</i></summary>
-      <p>Yes. TradeLog has a one-click CSV export. All your trades — date, time, stock symbol, quantity, buy price, sell price, P&L and your emotion tags — are exported to a CSV file you can open in Excel or Google Sheets.</p>
+      <p>Yes, with a Pro plan. TradeLog's one-click CSV export includes all your trades — date, time, symbol, quantity, buy price, sell price, P&L and your emotion tags — which you can open directly in Excel or Google Sheets.</p>
     </details>
     <details>
-      <summary>Does TradeLog work for F&O (options and futures) trading? <i class="sum-icon">+</i></summary>
-      <p>Yes. TradeLog captures all trade types — equities, F&O (options and futures), intraday (MIS) and delivery (CNC). Whether you trade Nifty options, Bank Nifty futures or stock F&O, TradeLog logs every order automatically.</p>
+      <summary>Does TradeLog work for F&amp;O options and futures trading? <i class="sum-icon">+</i></summary>
+      <p>Yes. TradeLog captures all trade types — equities, F&O options and futures, intraday (MIS) and delivery (CNC). Whether you trade Nifty options, Bank Nifty futures or stock F&O, TradeLog logs every order automatically.</p>
     </details>
     <details>
       <summary>What is the Debrief tab? <i class="sum-icon">+</i></summary>
-      <p>The Debrief tab is TradeLog's daily review feature. At the end of the day it shows you why you lost — whether it was overtrading, a single big loss, or a low win rate. It also shows your trading streak and a pre-market checklist to keep you disciplined every morning.</p>
-    </details>
-    <details>
-      <summary>Which is the best free trade journal for Indian traders? <i class="sum-icon">+</i></summary>
-      <p>TradeLog is the only trade journal for Indian traders that works automatically — no manual entry required. Other trade journals require you to manually enter each trade from Zerodha, Groww, or Upstox. TradeLog captures trades automatically the moment you place them.</p>
+      <p>The Debrief tab is TradeLog's daily review feature. At the end of a session it shows you a behavioural analysis — whether losses came from overtrading, a single large position, or low win rate. It also shows your discipline streak and a pre-market checklist.</p>
     </details>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-name">TradeLog</div>
+  <div class="footer-name">
+    <div class="logo-mark" style="width:20px;height:20px;border-radius:6px">
+      <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+        <polyline points="1,11 4.5,7 7.5,9 11,4 13,5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    TradeLog
+  </div>
   <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#pricing">Pricing</a>
     <a href="https://github.com/ABS-org07/tradelog-extension" target="_blank">GitHub</a>
     <a href="https://raw.githubusercontent.com/ABS-org07/tradelog-extension/refs/heads/main/privacy-policy.html" target="_blank">Privacy Policy</a>
   </div>
@@ -1285,8 +1353,8 @@ footer {
 <script>
 (function() {
   // Plan toggle
-  const radios = document.querySelectorAll('input[name="plan"]');
-  const labels = document.querySelectorAll('.plan-tog-label');
+  const radios  = document.querySelectorAll('input[name="plan"]');
+  const labels  = document.querySelectorAll('.plan-tog-label');
 
   function updateToggle() {
     const val = document.querySelector('input[name="plan"]:checked').value;
@@ -1294,21 +1362,20 @@ footer {
       const isLifetime = i === 1;
       const isSelected = (isLifetime && val === 'lifetime') || (!isLifetime && val === 'monthly');
       if (isSelected) {
-        lbl.style.borderColor = isLifetime ? 'var(--green)' : 'var(--blue)';
-        lbl.style.background = isLifetime ? 'var(--green-lo)' : 'var(--blue-lo)';
-        lbl.querySelector('.tog-price').style.color = isLifetime ? 'var(--green)' : 'var(--blue)';
-        lbl.querySelector('.tog-name').style.color = isLifetime ? 'var(--green)' : 'var(--blue)';
+        lbl.style.borderColor = 'var(--em-b)';
+        lbl.style.background  = 'var(--em-lo)';
+        lbl.querySelector('.tog-price').style.color = 'var(--em-b)';
+        lbl.querySelector('.tog-name').style.color  = 'var(--em-b)';
         lbl.querySelector('.tog-name').style.opacity = '.7';
       } else {
-        lbl.style.borderColor = 'var(--rule2)';
-        lbl.style.background = 'var(--bg2)';
-        lbl.querySelector('.tog-price').style.color = 'var(--fg)';
-        lbl.querySelector('.tog-name').style.color = 'var(--fg3)';
+        lbl.style.borderColor = 'var(--border)';
+        lbl.style.background  = 'var(--surface)';
+        lbl.querySelector('.tog-price').style.color = 'var(--text)';
+        lbl.querySelector('.tog-name').style.color  = 'var(--text3)';
         lbl.querySelector('.tog-name').style.opacity = '1';
       }
     });
   }
-
   radios.forEach(r => r.addEventListener('change', updateToggle));
 
   // Smooth scroll for plan CTA links
@@ -1331,11 +1398,10 @@ footer {
     }
   };
 
-  // Currency toggle
   let activeCurrency = 'inr';
   const PRICES = {
-    inr: { monthly: '₹149<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span>', lifetime: '₹999' },
-    usd: { monthly: '$3<span style="font-size:11px;font-weight:500;color:var(--fg3)">/mo</span>', lifetime: '$15' }
+    inr: { monthly: '₹149<span style="font-size:11px;font-weight:500;color:var(--text3)">/mo</span>', lifetime: '₹999' },
+    usd: { monthly: '$3<span style="font-size:11px;font-weight:500;color:var(--text3)">/mo</span>', lifetime: '$15' }
   };
   const FOOTNOTES = {
     inr: 'Instant payment via UPI / Card / Net Banking · 100% refund if not satisfied',
@@ -1347,7 +1413,7 @@ footer {
       activeCurrency = btn.dataset.cur;
       document.querySelectorAll('.cur-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById('price-monthly').innerHTML = PRICES[activeCurrency].monthly;
+      document.getElementById('price-monthly').innerHTML  = PRICES[activeCurrency].monthly;
       document.getElementById('price-lifetime').innerHTML = PRICES[activeCurrency].lifetime;
       document.getElementById('form-footnote').textContent = FOOTNOTES[activeCurrency];
     });
@@ -1355,18 +1421,17 @@ footer {
 
   // Form submit
   document.getElementById('pf-submit').addEventListener('click', async () => {
-    const name = document.getElementById('pf-name').value.trim();
+    const name    = document.getElementById('pf-name').value.trim();
     const contact = document.getElementById('pf-email').value.trim();
-    const plan = document.querySelector('input[name="plan"]:checked').value;
-    const msg = document.getElementById('pf-msg');
+    const plan    = document.querySelector('input[name="plan"]:checked').value;
+    const msg     = document.getElementById('pf-msg');
     if (!name || !contact) {
-      msg.style.color = 'var(--red)';
+      msg.style.color = 'var(--loss)';
       msg.textContent = 'Please fill in your name and email / WhatsApp.';
       return;
     }
     const btn = document.getElementById('pf-submit');
     btn.textContent = 'Processing…'; btn.disabled = true;
-    // Fire Web3Forms in background to log the lead
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -1379,12 +1444,11 @@ footer {
         plan: plan === 'lifetime' ? 'Pro Lifetime ₹999' : 'Pro Monthly ₹149'
       })
     }).catch(() => {});
-    // Redirect to payment link based on currency + plan
     setTimeout(() => {
       window.open(PAYMENT_LINKS[activeCurrency][plan], '_blank');
       btn.textContent = 'Pay Now →'; btn.disabled = false;
-      msg.style.color = 'var(--green)';
-      msg.textContent = 'Payment page opened! Complete payment to activate Pro.';
+      msg.style.color = 'var(--profit)';
+      msg.textContent = 'Payment page opened — complete payment to activate Pro.';
     }, 400);
   });
 })();
