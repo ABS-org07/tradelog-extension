@@ -98,7 +98,7 @@ function setupUpgradeBanner() {
   });
 
   upgradeBtn.addEventListener('click', () => {
-    chrome.tabs.create({ url: 'https://abs-org07.github.io/tradelog-extension/#pricing' });
+    chrome.tabs.create({ url: 'https://tradelog-extension.vercel.app/#pricing' });
   });
 
   dismissBtn.addEventListener('click', () => {
